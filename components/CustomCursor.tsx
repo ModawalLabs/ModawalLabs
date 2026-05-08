@@ -12,7 +12,7 @@ export default function CustomCursor() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const trailRef  = useRef<TrailPoint[]>([]);
   const lastPtRef = useRef<{ x: number; y: number } | null>(null);
-  const rafRef    = useRef<number>();
+  const rafRef    = useRef<number | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
