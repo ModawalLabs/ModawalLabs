@@ -6,19 +6,19 @@ import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const designs = [
-  { title: "SaaS Dashboard UI",        image: "/assets/MacBook Pro 16_ - 107.png" },
-  { title: "Pricing Page",             image: "/assets/MacBook Pro 16_ - 126.png" },
-  { title: "Mobile Onboarding Flow",   image: "/assets/Frame 1261154587.png" },
-  { title: "Component Library",        image: "/assets/MacBook Pro 16_ - 59.png" },
-  { title: "Landing Page Redesign",    image: "/assets/MacBook Pro 14_ - 2.png" },
-  { title: "Auth & User Flow",         image: "/assets/MacBook Pro 16_ - 114.png" },
-  { title: "Product Hunt Launch",      image: "/assets/3.png" },
-  { title: "Admin Panel Design",       image: "/assets/Desktop - 124.png" },
+  { title: "SaaS Dashboard UI", image: "/assets/MacBook Pro 16_ - 107.png" },
+  { title: "Pricing Page", image: "/assets/MacBook Pro 16_ - 126.png" },
+  { title: "Component Library", image: "/assets/MacBook Pro 16_ - 59.png" },
+  { title: "Mobile Onboarding Flow", image: "/assets/Frame 1261154587.png" },
+  { title: "Landing Page Redesign", image: "/assets/MacBook Pro 14_ - 2.png" },
+  { title: "Auth & User Flow", image: "/assets/MacBook Pro 16_ - 114.png" },
+  { title: "Admin Panel Design", image: "/assets/Desktop - 124.png" },
+  { title: "Product Hunt Launch", image: "/assets/3.png" },
 ];
 
 const SPRING = "cubic-bezier(0.23, 1, 0.32, 1)";
-const EASE   = [0.23, 1, 0.32, 1] as const;
-const DUR    = 0.65;
+const EASE = [0.23, 1, 0.32, 1] as const;
+const DUR = 0.65;
 
 export default function Designs() {
   const { ref, isInView, y } = useScrollAnimation();
@@ -26,22 +26,30 @@ export default function Designs() {
 
   const hdr = (delay = 0) =>
     isInView
-      ? { opacity: 1, y: 0,   transition: { duration: DUR, delay, ease: EASE } }
-      : { opacity: 0, y,      transition: { duration: DUR, delay: 0, ease: EASE } };
+      ? { opacity: 1, y: 0, transition: { duration: DUR, delay, ease: EASE } }
+      : { opacity: 0, y, transition: { duration: DUR, delay: 0, ease: EASE } };
 
   return (
     <section id="designs" className="section-padding" ref={ref}>
       <div className="max-w-[1200px] mx-auto px-6">
-
         {/* Header */}
         <div className="text-center mb-14">
-          <motion.span animate={hdr(0)} className="inline-block text-xs font-semibold tracking-widest uppercase text-blue-400 mb-4 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/5">
+          <motion.span
+            animate={hdr(0)}
+            className="inline-block text-xs font-semibold tracking-widest uppercase text-blue-400 mb-4 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/5"
+          >
             Designs
           </motion.span>
-          <motion.h2 animate={hdr(0.07)} className="text-4xl md:text-5xl font-bold text-white mt-4 mb-4">
+          <motion.h2
+            animate={hdr(0.07)}
+            className="text-4xl md:text-5xl font-bold text-white mt-4 mb-4"
+          >
             My <span className="gradient-text">Design Work</span>
           </motion.h2>
-          <motion.p animate={hdr(0.14)} className="text-slate-400 text-lg max-w-xl mx-auto">
+          <motion.p
+            animate={hdr(0.14)}
+            className="text-slate-400 text-lg max-w-xl mx-auto"
+          >
             Clean, intuitive interfaces crafted for real products.
           </motion.p>
         </div>
@@ -50,7 +58,7 @@ export default function Designs() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {designs.map((design, i) => {
             const isHovered = hoveredIndex === i;
-            const isShrunk  = hoveredIndex !== null && !isHovered;
+            const isShrunk = hoveredIndex !== null && !isHovered;
 
             return (
               // Layer 1 — scroll-reveal (framer-motion, direction-aware)
@@ -58,16 +66,30 @@ export default function Designs() {
                 key={i}
                 animate={
                   isInView
-                    ? { opacity: 1, y: 0, scale: 1,    transition: { duration: DUR, delay: 0.18 + i * 0.055, ease: EASE } }
-                    : { opacity: 0, y,    scale: 0.95,  transition: { duration: DUR, delay: 0,                ease: EASE } }
+                    ? {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        transition: {
+                          duration: DUR,
+                          delay: 0.18 + i * 0.055,
+                          ease: EASE,
+                        },
+                      }
+                    : {
+                        opacity: 0,
+                        y,
+                        scale: 0.95,
+                        transition: { duration: DUR, delay: 0, ease: EASE },
+                      }
                 }
                 className="relative"
               >
                 {/* Layer 2 — focus shrink (JS-driven so siblings respond) */}
                 <div
                   style={{
-                    transform:  isShrunk ? "scale(0.91)" : "scale(1)",
-                    opacity:    isShrunk ? 0.55 : 1,
+                    transform: isShrunk ? "scale(0.91)" : "scale(1)",
+                    opacity: isShrunk ? 0.55 : 1,
                     transition: `transform 500ms ${SPRING}, opacity 500ms ${SPRING}`,
                   }}
                   onMouseEnter={() => setHoveredIndex(i)}
@@ -101,7 +123,6 @@ export default function Designs() {
             );
           })}
         </div>
-
       </div>
     </section>
   );

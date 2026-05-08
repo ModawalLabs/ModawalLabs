@@ -298,17 +298,10 @@ function TabBar({ active, onChange }: { active: Tab; onChange: (t: Tab) => void 
                 onClick={() => onChange(tab)}
                 className={`relative px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
                   isActive
-                    ? "text-white"
+                    ? "text-blue-400 border border-blue-500/60"
                     : "text-slate-400 hover:text-white hover:bg-white/5"
                 }`}
               >
-                {isActive && (
-                  <motion.span
-                    layoutId="tab-pill"
-                    className="absolute inset-0 rounded-xl bg-blue-500 shadow-lg shadow-blue-500/30"
-                    transition={{ type: "spring", stiffness: 400, damping: 35 }}
-                  />
-                )}
                 <span className="relative z-10">{tab}</span>
               </button>
             );

@@ -9,29 +9,29 @@ const DUR  = 0.65;
 
 const products = [
   {
-    name: "SaaS Stack Starter Kit", tagline: "Tools, prompts & systems to launch your SaaS in days",
-    price: "$49", tag: "Most Popular", icon: "⚡", color: "from-blue-500/20 to-indigo-500/10",
-    features: ["Next.js boilerplate", "Auth + Payments", "Deployment guide", "AI prompt pack"],
+    name: "Idea Validation Kit", tagline: "Test your assumptions with real users before writing a single line of code",
+    price: "$19", tag: "Essential", icon: "🔍", color: "from-blue-500/20 to-indigo-500/10",
+    features: ["Assumption mapping", "User interview scripts", "Scoring framework", "Go / no-go checklist"],
   },
   {
-    name: "Founder's MVP Blueprint", tagline: "Step-by-step roadmap from idea to first paying customer",
-    price: "$29", tag: "Bestseller", icon: "🗺️", color: "from-indigo-500/20 to-purple-500/10",
-    features: ["Validation framework", "Tech stack guide", "Launch checklist", "Pricing strategy"],
+    name: "Market Research Playbook", tagline: "Understand your market, ICP, and competitive landscape in 48 hours",
+    price: "$25", tag: "Bestseller", icon: "📊", color: "from-indigo-500/20 to-purple-500/10",
+    features: ["ICP definition template", "Competitor analysis", "TAM/SAM/SOM guide", "Positioning canvas"],
   },
   {
-    name: "UX Design System", tagline: "Figma component library built for SaaS products",
-    price: "$39", tag: "New", icon: "🎨", color: "from-blue-400/20 to-cyan-500/10",
-    features: ["200+ components", "Dark & light modes", "Mobile-first", "Figma source file"],
+    name: "MVP Wireframe Templates", tagline: "Design your core user flows in Figma — no design skills needed",
+    price: "$29", tag: "Popular", icon: "🖼️", color: "from-blue-400/20 to-cyan-500/10",
+    features: ["10 screen templates", "User flow diagrams", "Clickable prototype guide", "Feedback form"],
   },
   {
-    name: "AI Prompt Playbook", tagline: "100+ tested prompts to build features 10x faster with AI",
-    price: "$19", tag: "Quick Win", icon: "🤖", color: "from-cyan-500/20 to-blue-500/10",
-    features: ["Code generation", "UI/UX prompts", "Marketing copy", "Product strategy"],
+    name: "Tech Stack Decision Guide", tagline: "Pick the right tools for speed, scale, and budget — without regret",
+    price: "$22", tag: "Smart Choice", icon: "🛠️", color: "from-cyan-500/20 to-blue-500/10",
+    features: ["Stack comparison matrix", "Cost breakdown", "Scalability checklist", "Vendor evaluation"],
   },
   {
-    name: "Launch Day Checklist", tagline: "Everything you need to ship on Product Hunt & beyond",
-    price: "$15", tag: "Free for now", icon: "🚀", color: "from-blue-600/20 to-indigo-400/10",
-    features: ["PH launch strategy", "SEO checklist", "Social templates", "Email sequences"],
+    name: "MVP Build Checklist", tagline: "The exact checklist used to ship production-ready MVPs fast",
+    price: "$35", tag: "Most Valuable", icon: "📋", color: "from-blue-600/20 to-indigo-400/10",
+    features: ["Feature prioritization", "QA checklist", "Security baseline", "Performance targets"],
   },
 ];
 
@@ -110,7 +110,7 @@ export default function Products() {
         <motion.div animate={hdr(0.35)} className="text-center mt-12">
           <a
             href="/products"
-            className="inline-flex items-center gap-3 btn-primary px-10 py-4 rounded-2xl text-base font-bold text-white shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 hover:scale-[1.03] transition-all duration-200"
+            className="inline-flex items-center gap-3 px-10 py-4 rounded-2xl text-base font-bold text-blue-400 border border-blue-500/60 hover:border-blue-400 hover:scale-[1.03] transition-all duration-200"
           >
             View All Products
             <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
