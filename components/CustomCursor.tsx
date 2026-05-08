@@ -1,0 +1,107 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
+type TrailPoint = { x: number; y: number; life: number };
+
+const DECAY      = 0.038; // ~26 frames (~0.43s) to fully fade
+const MIN_DIST   = 4;     // px between trail points
+
+export default function CustomCursor() {
+  const dotRef    = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const trailRef  = useRef<TrailPoint[]>([]);
+  const lastPtRef = useRef<{ x: number; y: number } | null>(null);
+  const rafRef    = useRef<number>();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const onMove = (e: MouseEvent) => {
+      const { clientX: x, clientY: y } = e;
+
+      // Move the dot immediately
+      if (dotRef.current) {
+        dotRef.current.style.left = `${x}px`;
+        dotRef.current.style.top  = `${y}px`;
+      }
+
+      // Only push a trail point if we've moved far enough
+      const last = lastPtRef.current;
+      if (!last || Math.hypot(x - last.x, y - last.y) >= MIN_DIST) {
+        trailRef.current.push({ x, y, life: 1 });
+        lastPtRef.current = { x, y };
+      }
+    };
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      trailRef.current = trailRef.current.filter((p) => {
+        p.life -= DECAY;
+        return p.life > 0;
+      });
+
+      trailRef.current.forEach((p) => {
+        const radius  = 3.5 * p.life;
+        const opacity = p.life * 0.45;
+
+        ctx.shadowBlur  = 10 * p.life;
+        ctx.shadowColor = `rgba(96, 165, 250, ${p.life * 0.6})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(147, 197, 253, ${opacity})`;
+        ctx.fill();
+      });
+
+      ctx.shadowBlur = 0;
+      rafRef.current = requestAnimationFrame(draw);
+    };
+
+    window.addEventListener("mousemove", onMove);
+    rafRef.current = requestAnimationFrame(draw);
+
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("resize", resize);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  return (
+    <>
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 pointer-events-none"
+        style={{ zIndex: 9998 }}
+      />
+      <div
+        ref={dotRef}
+        className="fixed pointer-events-none"
+        style={{
+          zIndex: 9999,
+          width: "11px",
+          height: "11px",
+          borderRadius: "50%",
+          background: "#93C5FD",
+          boxShadow:
+            "0 0 6px 2px rgba(147,197,253,0.9), 0 0 14px 4px rgba(96,165,250,0.55), 0 0 28px 6px rgba(59,130,246,0.25)",
+          transform: "translate(-50%, -50%)",
+          left: "-100px",
+          top: "-100px",
+          willChange: "left, top",
+        }}
+      />
+    </>
+  );
+}
