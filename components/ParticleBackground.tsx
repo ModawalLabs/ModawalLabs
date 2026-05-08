@@ -10,16 +10,37 @@ type Particle = {
   x: number; y: number;
   vx: number; vy: number;
   size: number; opacity: number;
+  layer: "foreground" | "midground" | "background";
+  hue: "blue" | "violet";
 };
 
 function makeParticle(w: number, h: number): Particle {
+  const layer = Math.random() < 0.33 ? "background" : Math.random() < 0.66 ? "midground" : "foreground";
+  const hue = Math.random() < 0.6 ? "blue" : "violet"; // 60% blue, 40% violet
+  
+  const sizeRange = {
+    foreground: { min: 1.2, max: 2.8 },
+    midground: { min: 0.8, max: 1.8 },
+    background: { min: 0.4, max: 1.0 },
+  };
+  const range = sizeRange[layer];
+  
+  const opacityRange = {
+    foreground: { min: 0.35, max: 0.55 },
+    midground: { min: 0.20, max: 0.40 },
+    background: { min: 0.08, max: 0.18 },
+  };
+  const opRange = opacityRange[layer];
+
   return {
     x:       Math.random() * w,
     y:       Math.random() * h,
-    vx:      (Math.random() - 0.5) * 0.25,
-    vy:      (Math.random() - 0.5) * 0.25,
-    size:    Math.random() * 2 + 0.8,
-    opacity: Math.random() * 0.45 + 0.25,
+    vx:      (Math.random() - 0.5) * (layer === "foreground" ? 0.35 : layer === "midground" ? 0.20 : 0.10),
+    vy:      (Math.random() - 0.5) * (layer === "foreground" ? 0.35 : layer === "midground" ? 0.20 : 0.10),
+    size:    Math.random() * (range.max - range.min) + range.min,
+    opacity: Math.random() * (opRange.max - opRange.min) + opRange.min,
+    layer,
+    hue,
   };
 }
 
@@ -86,27 +107,46 @@ export default function ParticleBackground() {
         if (p.x < 0 || p.x > canvas.width)  p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-        ctx.shadowBlur  = 12;
-        ctx.shadowColor = "rgba(96, 165, 250, 0.8)";
+        // Color based on hue - muted violet (30%) or blue (70%)
+        const isViolet = p.hue === "violet";
+        const shadowColor = isViolet 
+          ? "rgba(159, 122, 234, 0.65)" // muted violet
+          : "rgba(96, 165, 250, 0.7)";  // blue
+        const fillColor = isViolet
+          ? `rgba(185, 158, 220, ${p.opacity * 0.85})` // muted violet fill
+          : `rgba(147, 197, 253, ${p.opacity})`;       // blue fill
+
+        ctx.shadowBlur  = p.layer === "foreground" ? 14 : p.layer === "midground" ? 10 : 6;
+        ctx.shadowColor = shadowColor;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(147, 197, 253, ${p.opacity})`;
+        ctx.fillStyle = fillColor;
         ctx.fill();
         ctx.shadowBlur = 0;
       });
 
-      // Connection lines between nearby particles
+      // Connection lines between nearby particles - depth aware
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dist = Math.hypot(
             particles[i].x - particles[j].x,
             particles[i].y - particles[j].y,
           );
-          if (dist < 110) {
+          
+          // Only connect particles of similar layers for better visual hierarchy
+          const layerDiff = particles[i].layer === particles[j].layer ? 0 : 1;
+          const maxDist = 110 - (layerDiff * 20);
+          
+          if (dist < maxDist) {
+            const isViolet = particles[i].hue === "violet" || particles[j].hue === "violet";
+            const lineColor = isViolet
+              ? `rgba(159, 122, 234, ${0.10 * (1 - dist / maxDist)})`
+              : `rgba(59, 130, 246, ${0.07 * (1 - dist / maxDist)})`;
+            
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(59, 130, 246, ${0.07 * (1 - dist / 110)})`;
+            ctx.strokeStyle = lineColor;
             ctx.lineWidth   = 0.5;
             ctx.stroke();
           }
@@ -128,7 +168,7 @@ export default function ParticleBackground() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 w-full h-full pointer-events-none"
-      style={{ zIndex: 0, opacity: 0.9 }}
+      style={{ zIndex: 0, opacity: 0.85 }}
     />
   );
 }

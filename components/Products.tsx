@@ -3,34 +3,60 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import Image from "next/image";
 
 const EASE = [0.23, 1, 0.32, 1] as const;
 const DUR  = 0.65;
 
 const products = [
   {
-    name: "Idea Validation Kit", tagline: "Test your assumptions with real users before writing a single line of code",
-    price: "$19", tag: "Essential", icon: "🔍", color: "from-blue-500/20 to-indigo-500/10",
+    name: "Idea Validation Kit",
+    tagline: "Test your assumptions with real users before writing a single line of code",
+    price: "$19",
+    tag: "Essential",
+    icon: "🔍",
+    color: "from-blue-500/20 to-indigo-500/10",
+    image: "/road_to_mvp_product_assets/1.0.png",
     features: ["Assumption mapping", "User interview scripts", "Scoring framework", "Go / no-go checklist"],
   },
   {
-    name: "Market Research Playbook", tagline: "Understand your market, ICP, and competitive landscape in 48 hours",
-    price: "$25", tag: "Bestseller", icon: "📊", color: "from-indigo-500/20 to-purple-500/10",
+    name: "Market Research Playbook",
+    tagline: "Understand your market, ICP, and competitive landscape in 48 hours",
+    price: "$25",
+    tag: "Bestseller",
+    icon: "📊",
+    color: "from-indigo-500/20 to-purple-500/10",
+    image: "/road_to_mvp_product_assets/02.png",
     features: ["ICP definition template", "Competitor analysis", "TAM/SAM/SOM guide", "Positioning canvas"],
   },
   {
-    name: "MVP Wireframe Templates", tagline: "Design your core user flows in Figma — no design skills needed",
-    price: "$29", tag: "Popular", icon: "🖼️", color: "from-blue-400/20 to-cyan-500/10",
+    name: "MVP Wireframe Templates",
+    tagline: "Design your core user flows in Figma — no design skills needed",
+    price: "$29",
+    tag: "Popular",
+    icon: "🖼️",
+    color: "from-blue-400/20 to-cyan-500/10",
+    image: "/road_to_mvp_product_assets/03.png",
     features: ["10 screen templates", "User flow diagrams", "Clickable prototype guide", "Feedback form"],
   },
   {
-    name: "Tech Stack Decision Guide", tagline: "Pick the right tools for speed, scale, and budget — without regret",
-    price: "$22", tag: "Smart Choice", icon: "🛠️", color: "from-cyan-500/20 to-blue-500/10",
+    name: "Tech Stack Decision Guide",
+    tagline: "Pick the right tools for speed, scale, and budget — without regret",
+    price: "$22",
+    tag: "Smart Choice",
+    icon: "🛠️",
+    color: "from-cyan-500/20 to-blue-500/10",
+    image: "/road_to_mvp_product_assets/04.png",
     features: ["Stack comparison matrix", "Cost breakdown", "Scalability checklist", "Vendor evaluation"],
   },
   {
-    name: "MVP Build Checklist", tagline: "The exact checklist used to ship production-ready MVPs fast",
-    price: "$35", tag: "Most Valuable", icon: "📋", color: "from-blue-600/20 to-indigo-400/10",
+    name: "MVP Build Checklist",
+    tagline: "The exact checklist used to ship production-ready MVPs fast",
+    price: "$35",
+    tag: "Most Valuable",
+    icon: "📋",
+    color: "from-blue-600/20 to-indigo-400/10",
+    image: "/road_to_mvp_product_assets/05.png",
     features: ["Feature prioritization", "QA checklist", "Security baseline", "Performance targets"],
   },
 ];
@@ -84,10 +110,18 @@ export default function Products() {
         >
           {products.map((product, i) => (
             <div key={i} className="carousel-item flex-none w-[340px] card-base rounded-2xl p-7 hover:border-blue-500/40 group">
-              <div className="flex items-start justify-between mb-5">
-                <span className="text-xs font-bold text-blue-300 px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20">{product.tag}</span>
-                <span className="text-2xl">{product.icon}</span>
+              {/* Product Image */}
+              <div className="relative h-32 mb-5 rounded-xl overflow-hidden bg-gradient-to-br from-blue-500/20 to-indigo-500/10">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className="object-cover object-center"
+                  sizes="320px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
               </div>
+              
               <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-200 transition-colors">{product.name}</h3>
               <p className="text-slate-400 text-sm leading-relaxed mb-5">{product.tagline}</p>
               <ul className="space-y-2 mb-6">
