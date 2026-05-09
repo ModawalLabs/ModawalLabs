@@ -109,7 +109,7 @@ export default function PSNote() {
             <div className="space-y-5">
               <p className="text-slate-400 leading-relaxed">
                 I've put together the exact design file behind this site so you can see how it's
-                structured.
+                structured. Just add this file to Claude and ask it to build the website !
               </p>
 
               <a

@@ -111,7 +111,8 @@ export default function Products() {
           {products.map((product, i) => (
             <div key={i} className="carousel-item flex-none w-[340px] card-base rounded-2xl p-7 hover:border-blue-500/40 group">
               {/* Product Image */}
-              <div className="relative h-32 mb-5 rounded-xl overflow-hidden bg-gradient-to-br from-blue-500/20 to-indigo-500/10">
+              <div className="relative h-32 mb-5 rounded-xl overflow-hidden b
+              g-gradient-to-br from-blue-500/20 to-indigo-500/10">
                 <Image
                   src={product.image}
                   alt={product.name}

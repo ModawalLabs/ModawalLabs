@@ -291,3 +291,8 @@ body {
     padding: 89px 0;
   }
 }
+
+/* Font families */
+.font-playfair {
+  font-family: var(--font-playfair, 'Playfair Display', serif);
+}

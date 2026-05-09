@@ -112,7 +112,7 @@ export default function Services() {
                 </div>
                 <div className="flex gap-3">
                   <a href="#contact" className="btn-primary flex-1 py-2.5 rounded-lg text-sm font-semibold text-white text-center"><span>Book a Call</span></a>
-                  <a href="mailto:shivansh@example.com" className="btn-outline flex-1 py-2.5 rounded-lg text-sm font-semibold text-white text-center">Message Me</a>
+                  {/* <a href="mailto:shivansh@example.com" className="btn-outline flex-1 py-2.5 rounded-lg text-sm font-semibold text-white text-center">Message Me</a> */}
                 </div>
               </div>
             </motion.div>
