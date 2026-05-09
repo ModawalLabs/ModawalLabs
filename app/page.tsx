@@ -17,8 +17,8 @@ export default function Home() {
       <Navbar />
       <Playground />
       {/* <Hero /> */}
-      <WhatIDo />
       <CredibilityStrip />
+       <WhatIDo />
       <Products />
       <Designs />
       <Testimonials />
