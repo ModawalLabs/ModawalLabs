@@ -11,7 +11,7 @@ const EASE = [0.23, 1, 0.32, 1] as const;
 const DUR  = 0.65;
 
 /* ── Tab config ───────────────────────────────────────────────── */
-const TABS = ["Road to MVP", "UI Frameworks", "Bundles"] as const;
+const TABS = ["Road to MVP", "Bundles", "Prompt to UI"] as const;
 type Tab = typeof TABS[number];
 
 /* ── Road to MVP data ─────────────────────────────────────────── */
@@ -20,64 +20,96 @@ const mvpSteps = [
     step: "01", icon: "🔍",
     imgGradient: "linear-gradient(135deg, rgba(59,130,246,0.30) 0%, rgba(99,102,241,0.18) 100%)",
     image: "/road_to_mvp_product_assets/1.0.png",
-    name: "Idea Validation Kit",
-    tagline: "Test your assumptions with real users before writing a single line of code",
+    name: "The No-Code vs. Code Decision",
+    tagline: "Stop Googling. Use this one framework to decide exactly what you need to build, and what you don't.",
     price: "$19",
-    features: ["Assumption mapping", "User interview scripts", "Scoring framework", "Go / no-go checklist"],
+    features: [
+      "The 3 types of SaaS products and which technical approach fits each one. No more one-size-fits-all advice",
+      "How to map your idea to a stack in under 10 minutes using the SaaS Type Classifier. No more analysis paralysis",
+      "When no-code will actually hurt you: the 4 signals your idea genuinely needs a developer",
+      "What a real MVP costs at each tier, with actual budget ranges, not estimates pulled from thin air",
+      "The 'minimum lovable product' checklist: what to include, what to ruthlessly cut, and why shipping ugly beats perfecting forever",
+    ],
   },
   {
     step: "02", icon: "📊",
     imgGradient: "linear-gradient(135deg, rgba(99,102,241,0.30) 0%, rgba(37,99,235,0.18) 100%)",
     image: "/road_to_mvp_product_assets/02.png",
-    name: "Market Research Playbook",
-    tagline: "Understand your market, ICP, and competitive landscape in 48 hours",
+    name: "20 Tools That Actually Work",
+    tagline: "A curated, opinionated tool stack, ranked by category, annotated with real use cases, and priced honestly.",
     price: "$25",
-    features: ["ICP definition template", "Competitor analysis", "TAM/SAM/SOM guide", "Positioning canvas"],
+    features: [
+      "The 20 tools a senior developer would actually recommend, organized into 5 categories (build, payments, auth, analytics, support) with clear 'use this if…' guidance",
+      "How to avoid the tool-switching trap: which free plans are actually generous, which ones lock you in, and which have hidden costs that kill margins",
+      "Why most founders overpay for databases, and the one $0 option that handles 90% of early SaaS use cases",
+      "The 'good enough' principle: what to use at each stage of growth (0–100, 100–1,000, 1,000+ users)"
+      ],
   },
   {
     step: "03", icon: "🖼️",
     imgGradient: "linear-gradient(135deg, rgba(6,182,212,0.28) 0%, rgba(37,99,235,0.18) 100%)",
     image: "/road_to_mvp_product_assets/03.png",
-    name: "MVP Wireframe Templates",
-    tagline: "Design your core user flows in Figma — no design skills needed",
+    name: "Find & Vet Developers Without Being Technical",
+    tagline: "The exact process for finding, interviewing, and onboarding a developer when you have no idea what questions to ask.",
     price: "$29",
-    features: ["10 screen templates", "User flow diagrams", "Clickable prototype guide", "Feedback form"],
+    features: [
+      "Where the best freelance developers actually are (hint: not Fiverr) ",
+      "10 interview questions that reveal if a developer is actually good, without needing to understand code yourself",
+      "The 7 red flags that mean walk away, no matter how cheap their quote is",
+      "How to write a project brief that gets you accurate quotes, including the one-page template used to spec real client projects worth $50K+",
+      ],
   },
   {
     step: "04", icon: "🛠️",
     imgGradient: "linear-gradient(135deg, rgba(139,92,246,0.28) 0%, rgba(37,99,235,0.18) 100%)",
     image: "/road_to_mvp_product_assets/04.png",
-    name: "Tech Stack Decision Guide",
-    tagline: "Pick the right tools for speed, scale, and budget — without regret",
+    name: "Prompts to Build Your SaaS Faster",
+    tagline: "Not generic ChatGPT tips. These are engineered prompts for the exact decisions a non-tech founder faces building a SaaS.",
     price: "$22",
-    features: ["Stack comparison matrix", "Cost breakdown", "Scalability checklist", "Vendor evaluation"],
+    features: ["How to use AI to write a technical spec document so thorough that any developer can quote it",
+      "The 5 prompts that replace a $300/hr product consultant: idea validation, competitor analysis, feature prioritisation, pricing model testing, and user persona creation",
+      "The 'Rubber Duck Method': prompts for debugging your own thinking when you're stuck, second-guessing the build, or about to make an expensive mistake",
+      "Copy-ready prompts for writing your Terms of Service, Privacy Policy, onboarding emails, and landing page, grouped by category and ready to use today"
+    ],
   },
   {
     step: "05", icon: "📋",
     imgGradient: "linear-gradient(135deg, rgba(37,99,235,0.30) 0%, rgba(139,92,246,0.20) 100%)",
     image: "/road_to_mvp_product_assets/05.png",
-    name: "MVP Build Checklist",
-    tagline: "The exact checklist used to ship production-ready MVPs fast",
+    name: "Pricing, Stripe & Your First Customer",
+    tagline: "How to set up payments in a day, price your product correctly, and collect money before the product is even finished.",
     price: "$35",
-    features: ["Feature prioritization", "QA checklist", "Security baseline", "Performance targets"],
+    features: ["The 3 SaaS pricing models explained in plain English, with a decision framework for which one fits your product, your market, and your margin goals",
+      "How to set up Stripe in under an hour: subscriptions, free trials, upgrade/downgrade, and tax compliance, with a step-by-step walkthrough",
+      "Exactly what to say in a customer discovery call to validate your pricing, including a 10-question discovery script you can use this week",
+      "Churn prevention from day one: the 3 onboarding emails every SaaS needs to send in the first 7 days to stop free trials from going dark"
+    ],
   },
   {
     step: "06", icon: "🚀",
     imgGradient: "linear-gradient(135deg, rgba(20,184,166,0.28) 0%, rgba(59,130,246,0.18) 100%)",
     image: "/road_to_mvp_product_assets/06.png",
-    name: "Beta Launch Strategy",
-    tagline: "Get your first 100 users before the public launch",
+    name: "The 4 Docs Every SaaS Needs on Day One",
+    tagline: "Not a lawyer. Not legal advice. But the 4 documents that will save you from the most common, and most expensive, early-stage SaaS mistakes.",
     price: "$29",
-    features: ["Beta recruitment scripts", "Onboarding flow", "Feedback loop setup", "Metrics to track"],
+    features: ["The 4 non-negotiable docs: Terms of Service, Privacy Policy, Contractor Agreement, and a basic IP Assignment, and exactly what to put in each one",
+      "How to use AI to generate a first draft of each document, and the 5 clauses you must manually review before publishing anything",
+      "How to structure a contractor agreement so that everything your developer builds is legally yours from day one",
+      "GDPR, CCPA, and US data law in plain English: what you need to know, what you can safely ignore at the $0–$10K MRR stage, and when to get an actual lawyer"
+    ],
   },
   {
     step: "07", icon: "🔄",
     imgGradient: "linear-gradient(135deg, rgba(168,85,247,0.28) 0%, rgba(99,102,241,0.18) 100%)",
     image: "/road_to_mvp_product_assets/07.png",
-    name: "Feedback & Iteration Framework",
-    tagline: "Turn early user feedback into a product people keep paying for",
+    name: "30 Tasks in the Right Order",
+    tagline: "The exact launch sequence, day by day, task by task, so nothing falls through the cracks and you actually ship.",
     price: "$19",
-    features: ["Feedback tagging system", "Prioritisation matrix", "Sprint template", "Retention checkpoints"],
+    features: ["The 7-day pre-launch checklist: what to do in the week before you go live, from final QA to email sequences to payment testing",
+      "How to handle your first 10 customers: the manual onboarding approach that creates superfans, gets testimonials, and fixes critical bugs before they become reviews",
+      "Post-launch metrics you actually need to watch in week one: the 3 numbers that tell you if you have a real product or a real problem",
+      "What to do if nobody buys: the 3-day diagnosis framework that separates a messaging problem from a product problem so you fix the right thing first"
+    ],
   },
 ];
 
@@ -90,7 +122,7 @@ const mvpBundle = {
   includes: mvpSteps.map((s) => s.name),
 };
 
-/* ── UI Frameworks data ───────────────────────────────────────── */
+/* ── Prompt to UI data ───────────────────────────────────────── */
 const uiFrameworks = [
   {
     icon: "🧩", name: "SaaS Component Library",
@@ -143,21 +175,24 @@ const bundles = [
     tagline: "All 7 Road to MVP products. Go from raw idea to launched product.",
     originalPrice: "$178", price: "$99", saving: "Save $79",
     tag: "Most Popular", icon: "🚀",
+    available: true,
     includes: ["Idea Validation Kit", "Market Research Playbook", "MVP Wireframe Templates", "Tech Stack Decision Guide", "MVP Build Checklist", "Beta Launch Strategy", "Feedback & Iteration Framework"],
   },
   {
-    name: "UI Frameworks Bundle",
+    name: "Prompt to UI Bundle",
     tagline: "All 6 UI kits and design systems at one discounted price.",
     originalPrice: "$256", price: "$129", saving: "Save $127",
-    tag: "Best Value", icon: "🎨",
+    tag: "Coming Soon", icon: "🎨",
+    available: false,
     includes: ["SaaS Component Library", "Mobile-First UI Kit", "Landing Page Design System", "Admin Dashboard Template", "Auth Flow UI Pack", "Pricing & Checkout UI"],
   },
   {
     name: "Complete Founder Pack",
     tagline: "Every product across all sections. The ultimate toolkit for SaaS founders.",
     originalPrice: "$434", price: "$199", saving: "Save $235",
-    tag: "Ultimate", icon: "🏆",
-    includes: ["Everything in Road to MVP Bundle", "Everything in UI Frameworks Bundle", "Bonus: 1-hour strategy call", "Lifetime updates"],
+    tag: "Coming Soon", icon: "🏆",
+    available: false,
+    includes: ["Everything in Road to MVP Bundle", "Everything in Prompt to UI Bundle", "Bonus: 1-hour strategy call", "Lifetime updates"],
   },
 ];
 
@@ -292,17 +327,26 @@ function TabBar({ active, onChange }: { active: Tab; onChange: (t: Tab) => void 
         <div className="flex items-center gap-1 py-3">
           {TABS.map((tab) => {
             const isActive = tab === active;
+            const isDisabled = tab === "Prompt to UI";
             return (
               <button
                 key={tab}
-                onClick={() => onChange(tab)}
-                className={`relative px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                onClick={() => !isDisabled && onChange(tab)}
+                disabled={isDisabled}
+                className={`relative px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
                   isActive
                     ? "text-blue-400 border border-blue-500/60"
-                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                    : isDisabled
+                      ? "text-slate-500 bg-white/5 cursor-not-allowed"
+                      : "text-slate-400 hover:text-white hover:bg-white/5"
                 }`}
               >
                 <span className="relative z-10">{tab}</span>
+                {isDisabled && (
+                  <span className="relative z-10 text-[10px] uppercase px-2 py-1 rounded-full bg-white/10 text-slate-300 border border-white/10">
+                    Coming soon
+                  </span>
+                )}
               </button>
             );
           })}
@@ -351,15 +395,15 @@ function RoadToMVPSection() {
                 stepLabel={`Step ${product.step}`}
                 imageSrc={product.image}
               />
-              <div className="p-6 flex flex-col flex-1">
+              <div className="p-6 flex flex-col h-full">
                 <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-200 transition-colors">{product.name}</h3>
                 <p className="text-slate-400 text-sm leading-relaxed mb-4 flex-1">{product.tagline}</p>
-                <ul className="space-y-1.5 mb-5">
+                <ul className="space-y-1.5 mb-6">
                   {product.features.map((f, fi) => (
                     <li key={fi} className="flex items-center gap-2 text-xs text-slate-400"><Check />{f}</li>
                   ))}
                 </ul>
-                <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                <div className="mt-auto flex items-center justify-between pt-4 border-t border-white/5">
                   <span className="text-xl font-bold gradient-text">{product.price}</span>
                   <button className="btn-primary px-4 py-2 rounded-lg text-xs font-semibold text-white"><span>Buy Now</span></button>
                 </div>
@@ -413,7 +457,7 @@ function RoadToMVPSection() {
   );
 }
 
-/* ── UI Frameworks section ────────────────────────────────────── */
+/* ── Prompt to UI section ────────────────────────────────────── */
 function UIFrameworksSection() {
   const { ref, isInView, y } = useScrollAnimation();
 
@@ -427,7 +471,7 @@ function UIFrameworksSection() {
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="mb-14">
           <motion.h2 animate={hdr(0)} className="text-4xl md:text-5xl font-bold text-white mb-4">
-            UI <span className="gradient-text">Frameworks</span>
+            Prompt <span className="gradient-text">to User Interface</span>
           </motion.h2>
           <motion.p animate={hdr(0.14)} className="text-slate-400 text-lg max-w-xl">
             Production-ready design systems and component libraries built for modern SaaS products.
@@ -510,39 +554,62 @@ function BundlesSection() {
                   ? { opacity: 1, y: 0, scale: 1,   transition: { duration: DUR, delay: 0.2 + i * 0.1, ease: EASE } }
                   : { opacity: 0, y,    scale: 0.97, transition: { duration: DUR, delay: 0,              ease: EASE } }
               }
-              className="relative rounded-3xl overflow-hidden border border-blue-500/20 bg-gradient-to-br from-blue-600/8 via-[#0B0F1A] to-indigo-600/8 hover:border-blue-500/40 transition-colors duration-300"
+              className={`relative rounded-3xl overflow-hidden border transition-colors duration-300 ${bundle.available ? "border-blue-500/20 bg-gradient-to-br from-blue-600/8 via-[#0B0F1A] to-indigo-600/8 hover:border-blue-500/40" : "border-white/5 bg-white/10 opacity-80 shadow-[0_0_30px_rgba(59,130,246,0.12)]"}`}
             >
+              {!bundle.available && (
+                <div className="absolute inset-0 bg-white/5 backdrop-blur-sm animate-pulse pointer-events-none" />
+              )}
               <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-blue-500/8 blur-[60px] pointer-events-none" />
-              <div className="relative p-8 md:p-10 flex flex-col lg:flex-row gap-8 lg:items-center">
-                {/* Left */}
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-2xl">{bundle.icon}</span>
-                    <span className="text-xs font-bold text-white px-3 py-1 rounded-full bg-blue-500 shadow-md shadow-blue-500/30">{bundle.tag}</span>
-                    <span className="text-xs font-semibold text-emerald-400 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">{bundle.saving}</span>
+              <div className={`relative p-8 md:p-10 flex flex-col ${bundle.available ? "lg:flex-row gap-8 lg:items-center" : "items-center text-center justify-center"}`}>
+                {/* Active bundle content */}
+                {bundle.available ? (
+                  <>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-4">
+                        <span className="text-2xl">{bundle.icon}</span>
+                        <span className="text-xs font-bold px-3 py-1 rounded-full text-white bg-blue-500 shadow-blue-500/30 shadow-md">
+                          {bundle.tag}
+                        </span>
+                        <span className="text-xs font-semibold text-emerald-400 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                          {bundle.saving}
+                        </span>
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">{bundle.name}</h3>
+                      <p className="text-slate-400 leading-relaxed mb-6 max-w-lg">{bundle.tagline}</p>
+                      <div className="flex items-baseline gap-3 mb-6">
+                        <span className="text-4xl font-bold gradient-text">{bundle.price}</span>
+                        <span className="text-slate-500 text-lg line-through">{bundle.originalPrice}</span>
+                      </div>
+                      <button className="btn-primary px-8 py-3.5 rounded-xl text-base font-bold text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-[1.02] transition-all duration-200">
+                        <span>Get Bundle</span>
+                      </button>
+                    </div>
+                    <div className="lg:w-[320px] flex-shrink-0">
+                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4">What&apos;s included</p>
+                      <ul className="space-y-2.5">
+                        {bundle.includes.map((item, ii) => (
+                          <li key={ii} className="flex items-center gap-3 text-sm text-slate-300">
+                            <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/15 border border-blue-500/30 flex items-center justify-center"><Check /></span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </>
+                ) : (
+                  <div className="w-full space-y-6 text-slate-400">
+                    {/* <span className="inline-flex items-center justify-center text-xs font-semibold tracking-widest uppercase text-slate-300 px-4 py-2 rounded-full bg-white/5 border border-white/5">
+                      Coming Soon
+                    </span> */}
+                    <h3 className="text-2xl md:text-3xl font-bold text-slate-300">{bundle.name}</h3>
+                    <button
+                      disabled
+                      className="mx-auto bg-white/5 text-slate-300 cursor-not-allowed px-8 py-3.5 rounded-xl text-base font-bold border border-white/5 shadow-[0_0_30px_rgba(59,130,246,0.1)]"
+                    >
+                      <span>Coming Soon</span>
+                    </button>
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">{bundle.name}</h3>
-                  <p className="text-slate-400 leading-relaxed mb-6 max-w-lg">{bundle.tagline}</p>
-                  <div className="flex items-baseline gap-3 mb-6">
-                    <span className="text-4xl font-bold gradient-text">{bundle.price}</span>
-                    <span className="text-slate-500 text-lg line-through">{bundle.originalPrice}</span>
-                  </div>
-                  <button className="btn-primary px-8 py-3.5 rounded-xl text-base font-bold text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-[1.02] transition-all duration-200">
-                    <span>Get Bundle</span>
-                  </button>
-                </div>
-                {/* Right */}
-                <div className="lg:w-[320px] flex-shrink-0">
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4">What&apos;s included</p>
-                  <ul className="space-y-2.5">
-                    {bundle.includes.map((item, ii) => (
-                      <li key={ii} className="flex items-center gap-3 text-sm text-slate-300">
-                        <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/15 border border-blue-500/30 flex items-center justify-center"><Check /></span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                )}
               </div>
             </motion.div>
           ))}
@@ -571,7 +638,7 @@ export default function ProductsPage() {
             transition={{ duration: 0.3, ease: EASE }}
           >
             {activeTab === "Road to MVP"    && <RoadToMVPSection />}
-            {activeTab === "UI Frameworks"  && <UIFrameworksSection />}
+            {activeTab === "Prompt to UI"  && <UIFrameworksSection />}
             {activeTab === "Bundles"        && <BundlesSection />}
           </motion.div>
         </AnimatePresence>

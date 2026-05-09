@@ -10,54 +10,49 @@ const DUR  = 0.65;
 
 const products = [
   {
-    name: "Idea Validation Kit",
-    tagline: "Test your assumptions with real users before writing a single line of code",
+    name: "The No-Code vs. Code Decision",
+    tagline: "Stop Googling. Use this one framework to decide exactly what you need to build — and what you don't.",
     price: "$19",
     tag: "Essential",
     icon: "🔍",
     color: "from-blue-500/20 to-indigo-500/10",
     image: "/road_to_mvp_product_assets/1.0.png",
-    features: ["Assumption mapping", "User interview scripts", "Scoring framework", "Go / no-go checklist"],
   },
   {
-    name: "Market Research Playbook",
-    tagline: "Understand your market, ICP, and competitive landscape in 48 hours",
+    name: "20 Tools That Actually Work",
+    tagline: "A curated, opinionated tool stack — ranked by category, annotated with real use cases, and priced honestly.",
     price: "$25",
     tag: "Bestseller",
     icon: "📊",
     color: "from-indigo-500/20 to-purple-500/10",
     image: "/road_to_mvp_product_assets/02.png",
-    features: ["ICP definition template", "Competitor analysis", "TAM/SAM/SOM guide", "Positioning canvas"],
   },
   {
-    name: "MVP Wireframe Templates",
-    tagline: "Design your core user flows in Figma — no design skills needed",
+    name: "Find & Vet Developers Without Being Technical",
+    tagline: "The exact process for finding, interviewing, and onboarding a developer when you have no idea what questions to ask.",
     price: "$29",
     tag: "Popular",
     icon: "🖼️",
     color: "from-blue-400/20 to-cyan-500/10",
     image: "/road_to_mvp_product_assets/03.png",
-    features: ["10 screen templates", "User flow diagrams", "Clickable prototype guide", "Feedback form"],
   },
   {
-    name: "Tech Stack Decision Guide",
-    tagline: "Pick the right tools for speed, scale, and budget — without regret",
+    name: "Prompts to Build Your SaaS Faster",
+    tagline: "Not generic ChatGPT tips. These are engineered prompts for the exact decisions a non-tech founder faces building a SaaS.",
     price: "$22",
     tag: "Smart Choice",
     icon: "🛠️",
     color: "from-cyan-500/20 to-blue-500/10",
     image: "/road_to_mvp_product_assets/04.png",
-    features: ["Stack comparison matrix", "Cost breakdown", "Scalability checklist", "Vendor evaluation"],
   },
   {
-    name: "MVP Build Checklist",
-    tagline: "The exact checklist used to ship production-ready MVPs fast",
+    name: "Pricing, Stripe & Your First Customer",
+    tagline: "How to set up payments in a day, price your product correctly, and collect money before the product is even finished.",
     price: "$35",
     tag: "Most Valuable",
     icon: "📋",
     color: "from-blue-600/20 to-indigo-400/10",
     image: "/road_to_mvp_product_assets/05.png",
-    features: ["Feature prioritization", "QA checklist", "Security baseline", "Performance targets"],
   },
 ];
 
@@ -109,7 +104,7 @@ export default function Products() {
           style={{ scrollPaddingLeft: "0px" }}
         >
           {products.map((product, i) => (
-            <div key={i} className="carousel-item flex-none w-[340px] card-base rounded-2xl p-7 hover:border-blue-500/40 group">
+            <div key={i} className="carousel-item flex-none w-[340px] h-[420px] card-base rounded-2xl p-7 hover:border-blue-500/40 group flex flex-col">
               {/* Product Image */}
               <div className="relative h-32 mb-5 rounded-xl overflow-hidden b
               g-gradient-to-br from-blue-500/20 to-indigo-500/10">
@@ -124,16 +119,8 @@ export default function Products() {
               </div>
               
               <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-200 transition-colors">{product.name}</h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-5">{product.tagline}</p>
-              <ul className="space-y-2 mb-6">
-                {product.features.map((f, fi) => (
-                  <li key={fi} className="flex items-center gap-2 text-sm text-slate-400">
-                    <svg width="14" height="14" fill="none" stroke="#60A5FA" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <div className="flex items-center justify-between pt-5 border-t border-white/5">
+              <p className="text-slate-400 text-sm leading-relaxed mb-5 flex-1">{product.tagline}</p>
+              <div className="flex items-center justify-between pt-5 border-t border-white/5 mt-auto">
                 <span className="text-2xl font-bold gradient-text">{product.price}</span>
                 <button className="btn-primary px-5 py-2.5 rounded-lg text-sm font-semibold text-white"><span>Buy Now</span></button>
               </div>

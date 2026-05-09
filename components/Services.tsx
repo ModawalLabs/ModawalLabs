@@ -82,21 +82,39 @@ export default function Services() {
                   ? { opacity: 1, y: 0, scale: 1,   transition: { duration: DUR, delay: 0.25 + i * 0.1, ease: EASE } }
                   : { opacity: 0, y,    scale: 0.96, transition: { duration: DUR, delay: 0,               ease: EASE } }
               }
-              className={`card-base rounded-2xl p-8 hover:border-blue-500/40 relative overflow-hidden ${service.popular ? "border-blue-500/30" : ""}`}
+              className={`relative rounded-[32px] overflow-hidden border border-white/10 bg-[#0b1220] shadow-[0_20px_80px_rgba(15,23,42,0.45)] p-6 md:p-7 transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/30 ${service.popular ? "border-blue-500/30" : ""}`}
             >
               {service.popular && (
                 <div className="absolute top-0 right-0">
                   <div className="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl rounded-tr-2xl">Most Requested</div>
                 </div>
               )}
-              <div className={`absolute inset-0 bg-gradient-to-br ${service.color} pointer-events-none`} />
-              <div className="relative z-10">
-                <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-300 mb-6">
+              <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-70 pointer-events-none`} />
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: "radial-gradient(circle at top left, rgba(56,189,248,0.16), transparent 32%), radial-gradient(circle at bottom right, rgba(79,70,229,0.16), transparent 28%)",
+                }}
+              />
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: "linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 35%)",
+                }}
+              />
+              <div
+                className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none"
+                style={{
+                  backgroundImage: "url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 200\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.6\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E')",
+                }}
+              />
+              <div className="relative z-10 space-y-5">
+                <div className="w-11 h-11 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-300 mb-5">
                   {service.icon}
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed mb-6">{service.text}</p>
-                <ul className="space-y-2 mb-7">
+                <h3 className="text-lg md:text-xl font-semibold text-white tracking-tight leading-tight">{service.title}</h3>
+                <p className="text-slate-400 text-sm leading-6 md:leading-7">{service.text}</p>
+                <ul className="space-y-3 mb-5">
                   {service.deliverables.map((d, di) => (
                     <li key={di} className="flex items-center gap-2 text-sm text-slate-300">
                       <svg width="14" height="14" fill="none" stroke="#60A5FA" strokeWidth="2" viewBox="0 0 24 24">
@@ -106,11 +124,11 @@ export default function Services() {
                     </li>
                   ))}
                 </ul>
-                <div className="flex items-center justify-between py-4 border-t border-white/5 mb-5">
-                  <span className="text-xl font-bold gradient-text">{service.price}</span>
+                <div className="flex items-center justify-between py-3 border-t border-white/5 mb-4">
+                  <span className="text-lg md:text-xl font-bold gradient-text">{service.price}</span>
                   <span className="text-xs text-slate-500 bg-white/5 px-2.5 py-1 rounded-full border border-white/5">{service.duration}</span>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row">
                   <a href="#contact" className="btn-primary flex-1 py-2.5 rounded-lg text-sm font-semibold text-white text-center"><span>Book a Call</span></a>
                   {/* <a href="mailto:shivansh@example.com" className="btn-outline flex-1 py-2.5 rounded-lg text-sm font-semibold text-white text-center">Message Me</a> */}
                 </div>
