@@ -31,17 +31,17 @@ export default function Playground() {
           <div className="max-w-2xl">
             <h1
               className="text-5xl sm:text-6xl md:text-7xl font-bold leading-[1.05] tracking-tight mb-6 animate-fade-in-up delay-100 font-playfair"
-              style={{ opacity: 0, animationFillMode: "forwards" }}
+              style={{ opacity: 0, animationFillMode: "forwards", textShadow: "0 0 8px rgba(0,0,0,1), 0 4px 24px rgba(0,0,0,1), 0 8px 60px rgba(0,0,0,0.95), 0 0 120px rgba(0,0,0,0.85)" }}
             >
               Stop Overthinking.
               <span className="block gradient-text text-glow">
                 Start Building.
               </span>
-            </h1>
+            </h1> 
 
             <p
               className="text-lg md:text-xl text-white/80 max-w-xl leading-relaxed mb-10 animate-fade-in-up delay-200 mx-auto"
-              style={{ opacity: 0, animationFillMode: "forwards" }}
+              style={{ opacity: 0, animationFillMode: "forwards", textShadow: "0 0 8px rgba(0,0,0,1), 0 4px 32px rgba(0,0,0,1), 0 0 80px rgba(0,0,0,0.9)" }}
             >
               Go from idea to live product
               — without needing technical skills or a big team.
@@ -54,7 +54,7 @@ export default function Playground() {
               <a href="#products" className="btn-primary px-8 py-4 rounded-xl text-base font-semibold text-white min-w-[180px] text-center">
                 <span>View Products</span>
               </a>
-              <a href="#services" className="btn-outline px-8 py-4 rounded-xl text-base font-semibold text-white min-w-[180px] text-center">
+              <a href="#services" className="btn-outline px-8 py-4 rounded-xl text-base font-semibold text-white min-w-[180px] text-center" style={{ borderColor: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.08)" }}>
                 Hire Me
               </a>
             </div>
