@@ -43,7 +43,7 @@ export default function Playground() {
               className="text-lg md:text-xl text-white/80 max-w-xl leading-relaxed mb-10 animate-fade-in-up delay-200 mx-auto"
               style={{ opacity: 0, animationFillMode: "forwards" }}
             >
-              I help non-tech founders go from idea to live product
+              Go from idea to live product
               — without needing technical skills or a big team.
             </p>
 

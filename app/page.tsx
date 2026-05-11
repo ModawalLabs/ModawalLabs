@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import CredibilityStrip from "@/components/CredibilityStrip";
 import WhatIDo from "@/components/WhatIDo";
 import Products from "@/components/Products";
+import BuildPhilosophy from "@/components/BuildPhilosophy";
 import Designs from "@/components/Designs";
 import Testimonials from "@/components/Testimonials";
 import Services from "@/components/Services";
@@ -18,13 +19,14 @@ export default function Home() {
       <Playground />
       {/* <Hero /> */}
       <CredibilityStrip />
-       <WhatIDo />
       <Products />
+       <WhatIDo />
+      <BuildPhilosophy />
       <Designs />
       <Testimonials />
       <Services />
-      <PSNote />
       <Contact />
+      <PSNote />
       <Footer />
     </main>
   );

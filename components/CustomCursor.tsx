@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type TrailPoint = { x: number; y: number; life: number };
 
@@ -8,6 +8,7 @@ const DECAY      = 0.038; // ~26 frames (~0.43s) to fully fade
 const MIN_DIST   = 4;     // px between trail points
 
 export default function CustomCursor() {
+  const [isHoverDevice, setIsHoverDevice] = useState(false);
   const dotRef    = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const trailRef  = useRef<TrailPoint[]>([]);
@@ -15,6 +16,19 @@ export default function CustomCursor() {
   const rafRef    = useRef<number | null>(null);
 
   useEffect(() => {
+    // Check if device supports hover (desktop)
+    const mediaQuery = window.matchMedia('(hover: hover)');
+    setIsHoverDevice(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => setIsHoverDevice(e.matches);
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  useEffect(() => {
+    if (!isHoverDevice) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -85,7 +99,9 @@ export default function CustomCursor() {
       window.removeEventListener("resize", resize);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [isHoverDevice]);
+
+  if (!isHoverDevice) return null;
 
   return (
     <>

@@ -162,7 +162,7 @@ export function ShaderAnimation() {
     // Animation loop
     const animate = () => {
       sceneRef.current.animationId = requestAnimationFrame(animate)
-      uniforms.time.value += 0.03
+      uniforms.time.value += 0.025
       renderer.render(scene, camera)
     }
 

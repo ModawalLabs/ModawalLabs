@@ -139,7 +139,7 @@ export default function Products() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
-          <p className="text-slate-500 text-xs mt-3">10 products available · Instant download</p>
+          {/* <p className="text-slate-500 text-xs mt-3">10 products available · Instant download</p> */}
         </motion.div>
 
       </div>
