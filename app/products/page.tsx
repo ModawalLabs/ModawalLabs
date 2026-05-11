@@ -64,8 +64,8 @@ function HeroSection() {
           className="inline-flex items-center gap-8 px-8 py-4 rounded-2xl border border-white/5 bg-white/[0.02]"
         >
           {[
-            { value: "17+",  label: "Products" },
-            { value: "500+", label: "Founders Helped" },
+            { value: "15+",  label: "Products" },
+            { value: "100+", label: "Founders Helped" },
             { value: "4.9★", label: "Avg. Rating" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">

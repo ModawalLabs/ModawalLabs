@@ -35,7 +35,7 @@ export default function Playground() {
             >
               Stop Overthinking.
               <span className="block gradient-text text-glow">
-                Start Building Your SaaS.
+                Start Building.
               </span>
             </h1>
 
