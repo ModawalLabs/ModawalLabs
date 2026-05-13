@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
-const EMAIL = "modawalshivansh@gmail.com";
+const EMAIL = "modawallabs@gmail.com";
 const EASE  = [0.23, 1, 0.32, 1] as const;
 const DUR   = 0.65;
 

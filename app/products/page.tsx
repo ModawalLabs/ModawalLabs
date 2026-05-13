@@ -92,7 +92,7 @@ function TabBar({ active, onChange }: { active: Tab; onChange: (t: Tab) => void 
         <div className="flex items-center gap-1 py-3">
           {TABS.map((tab) => {
             const isActive = tab === active;
-            const isDisabled = tab === "Prompt to UI";
+            const isDisabled = tab === "Prompt to UI" || tab === "Bundles";
             return (
               <button
                 key={tab}

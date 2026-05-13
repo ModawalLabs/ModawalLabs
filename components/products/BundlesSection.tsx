@@ -92,12 +92,8 @@ export default function BundlesSection() {
                       </div>
                       <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">{bundle.name}</h3>
                       <p className="text-slate-400 leading-relaxed mb-6 max-w-lg">{bundle.tagline}</p>
-                      <div className="flex items-baseline gap-3 mb-6">
-                        <span className="text-4xl font-bold gradient-text">{bundle.price}</span>
-                        <span className="text-slate-500 text-lg line-through">{bundle.originalPrice}</span>
-                      </div>
-                      <button className="btn-primary px-8 py-3.5 rounded-xl text-base font-bold text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-[1.02] transition-all duration-200">
-                        <span>Get Bundle</span>
+                      <button disabled className="bg-white/5 text-slate-500 cursor-not-allowed px-8 py-3.5 rounded-xl text-base font-bold border border-white/5">
+                        <span>Coming Soon</span>
                       </button>
                     </div>
                     <div className="lg:w-[320px] flex-shrink-0">

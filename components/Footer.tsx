@@ -34,7 +34,7 @@ export default function Footer() {
               <span className="gradient-text">Modawal</span>
               <span className="text-white/90">Labs</span>
             </div>
-            <p className="text-slate-500 text-sm mt-1">Building SaaS that founders actually ship.</p>
+            <p className="text-slate-500 text-sm mt-1">Helping build SaaS that founders actually ship.</p>
           </div>
 
           {/* Nav links */}

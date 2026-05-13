@@ -217,9 +217,8 @@ export default function RoadToMVPSection() {
                     <li key={fi} className="flex items-center gap-2 text-xs text-slate-400"><Check />{f}</li>
                   ))}
                 </ul>
-                <div className="mt-auto flex items-center justify-between pt-4 border-t border-white/5">
-                  <span className="text-xl font-bold gradient-text">{product.price}</span>
-                  <button className="btn-primary px-4 py-2 rounded-lg text-xs font-semibold text-white"><span>Buy Now</span></button>
+                <div className="mt-auto flex items-center justify-end pt-4 border-t border-white/5">
+                  <button disabled className="bg-white/5 text-slate-500 cursor-not-allowed px-4 py-2 rounded-lg text-xs font-semibold"><span>Coming Soon</span></button>
                 </div>
               </div>
             </motion.div>

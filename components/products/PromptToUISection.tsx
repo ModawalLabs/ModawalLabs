@@ -162,17 +162,9 @@ export default function PromptToUISection() {
                     <li key={fi} className="flex items-center gap-2 text-xs text-slate-400"><Check />{f}</li>
                   ))}
                 </ul>
-                <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                  <span className="text-xl font-bold gradient-text">{product.price}</span>
-                  <button
-                    disabled={product.tag === "Coming Soon"}
-                    className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 ${
-                      product.tag === "Coming Soon"
-                        ? "bg-white/5 text-slate-500 cursor-not-allowed"
-                        : "btn-primary text-white"
-                    }`}
-                  >
-                    <span>{product.tag === "Coming Soon" ? "Coming Soon" : "Buy Now"}</span>
+                <div className="flex items-center justify-end pt-4 border-t border-white/5">
+                  <button disabled className="bg-white/5 text-slate-500 cursor-not-allowed px-4 py-2 rounded-lg text-xs font-semibold">
+                    <span>Coming Soon</span>
                   </button>
                 </div>
               </div>

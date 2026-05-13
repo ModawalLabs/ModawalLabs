@@ -120,9 +120,8 @@ export default function Products() {
               
               <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-200 transition-colors">{product.name}</h3>
               <p className="text-slate-400 text-sm leading-relaxed mb-5 flex-1">{product.tagline}</p>
-              <div className="flex items-center justify-between pt-5 border-t border-white/5 mt-auto">
-                <span className="text-2xl font-bold gradient-text">{product.price}</span>
-                <button className="btn-primary px-5 py-2.5 rounded-lg text-sm font-semibold text-white"><span>Buy Now</span></button>
+              <div className="flex items-center justify-end pt-5 border-t border-white/5 mt-auto">
+                <button disabled className="bg-white/5 text-slate-500 cursor-not-allowed px-5 py-2.5 rounded-lg text-sm font-semibold"><span>Coming Soon</span></button>
               </div>
             </div>
           ))}
