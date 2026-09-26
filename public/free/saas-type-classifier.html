@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaaS Type Classifier (free sample) · Road to MVP</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #0D0D0D;
+  --ink2: #2A2A2A;
+  --ink3: #5A5A5A;
+  --ink4: #9A9A9A;
+  --paper: #F7F4EE;
+  --paper2: #EDEAE2;
+  --paper3: #E0DCD2;
+  --gold: #B8860B;
+  --gold-l: #C9960D;
+  --gold-pale: #F5EDD3;
+  --green: #1A3A2A;
+  --green-l: #2D5A40;
+  --green-pale: #EAF4EE;
+  --red: #8B2215;
+  --red-pale: #FFF0EE;
+  --amber: #7A4F00;
+  --amber-pale: #FFF8E8;
+  --blue: #0C3D6E;
+  --blue-pale: #E6F1FB;
+  --white: #FFFFFF;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --mono: 'DM Mono', monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HERO ─────────────────────────────────────────────────── */
+.hero {
+  background: var(--ink);
+  padding: 64px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero-orb-1 { width: 500px; height: 500px; top: -200px; right: -150px; background: radial-gradient(circle, rgba(184,134,11,0.12) 0%, transparent 70%); }
+.hero-orb-2 { width: 300px; height: 300px; bottom: -100px; left: -80px; background: radial-gradient(circle, rgba(45,90,64,0.18) 0%, transparent 70%); }
+
+.hero-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 40px 52px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-l);
+  margin-bottom: 24px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px; height: 1px;
+  background: var(--gold-l);
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 6vw, 58px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.08;
+  margin-bottom: 16px;
+}
+.hero-title em { color: var(--gold-l); font-style: normal; }
+
+.hero-sub {
+  font-size: 16px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.65;
+  max-width: 520px;
+  margin-bottom: 32px;
+}
+
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+.badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.05);
+}
+
+/* Progress strip */
+.progress-strip {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 0;
+}
+.progress-item {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: background 0.3s;
+}
+.progress-item .fill {
+  height: 100%;
+  width: 0%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.6s var(--ease);
+}
+.progress-item.answered .fill { width: 100%; }
+
+/* ── MAIN ─────────────────────────────────────────────────── */
+.main {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 48px 40px 80px;
+}
+
+/* ── QUESTION SECTION ──────────────────────────────────────── */
+.q-section {
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s var(--ease) forwards;
+}
+.q-section:nth-child(1) { animation-delay: 0.1s; }
+.q-section:nth-child(2) { animation-delay: 0.2s; }
+.q-section:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.q-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.q-card {
+  background: var(--green);
+  border-radius: 14px;
+  padding: 22px 24px 20px;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.q-num-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gold-l);
+  margin-bottom: 10px;
+}
+
+.q-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.q-hint {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+}
+
+/* Answers grid */
+.answers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .answers-grid { grid-template-columns: 1fr; }
+  .hero-inner, .main { padding-left: 20px; padding-right: 20px; }
+}
+
+.answer-card {
+  background: var(--white);
+  border: 1.5px solid var(--paper3);
+  border-radius: 12px;
+  padding: 18px 16px 16px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  position: relative;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.answer-card:hover {
+  border-color: var(--paper3);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  transform: translateY(-2px);
+}
+
+.answer-card.selected {
+  transform: translateY(-2px);
+}
+
+.answer-card.selected-A { border-color: var(--green-l); box-shadow: 0 0 0 3px rgba(45,90,64,0.12); }
+.answer-card.selected-B { border-color: #C9960D; box-shadow: 0 0 0 3px rgba(201,150,13,0.12); }
+.answer-card.selected-C { border-color: #C0392B; box-shadow: 0 0 0 3px rgba(192,57,43,0.12); }
+.answer-card.selected-D { border-color: #1A6EBC; box-shadow: 0 0 0 3px rgba(26,110,188,0.12); }
+
+.answer-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.answer-letter {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  background: var(--paper2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink3);
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+}
+
+.selected-A .answer-letter { background: var(--green-pale); color: var(--green); }
+.selected-B .answer-letter { background: var(--amber-pale); color: var(--amber); }
+.selected-C .answer-letter { background: var(--red-pale); color: var(--red); }
+.selected-D .answer-letter { background: var(--blue-pale); color: var(--blue); }
+
+.answer-check {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--paper3);
+  margin-left: auto;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  margin-top: 2px;
+}
+.answer-check svg { opacity: 0; transform: scale(0.5); transition: all 0.2s var(--ease); }
+
+.selected-A .answer-check { background: var(--green-l); border-color: var(--green-l); }
+.selected-B .answer-check { background: #C9960D; border-color: #C9960D; }
+.selected-C .answer-check { background: #C0392B; border-color: #C0392B; }
+.selected-D .answer-check { background: #1A6EBC; border-color: #1A6EBC; }
+.answer-card.selected .answer-check svg { opacity: 1; transform: scale(1); }
+
+.answer-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.35;
+  flex: 1;
+}
+
+.answer-desc {
+  font-size: 12px;
+  color: var(--ink3);
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+
+.answer-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.03em;
+}
+.pill-A { background: var(--green-pale); color: var(--green); }
+.pill-B { background: var(--amber-pale); color: var(--amber); }
+.pill-C { background: var(--red-pale); color: var(--red); }
+.pill-D { background: var(--blue-pale); color: var(--blue); }
+
+.answer-pts {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  color: var(--ink4);
+  margin-left: auto;
+  padding: 4px 8px;
+  background: var(--paper);
+  border-radius: 100px;
+  border: 1px solid var(--paper3);
+  transition: all 0.2s;
+}
+.selected-A .answer-pts { background: var(--green-pale); color: var(--green); border-color: transparent; }
+.selected-B .answer-pts { background: var(--amber-pale); color: var(--amber); border-color: transparent; }
+.selected-C .answer-pts { background: var(--red-pale); color: var(--red); border-color: transparent; }
+.selected-D .answer-pts { background: var(--blue-pale); color: var(--blue); border-color: transparent; }
+
+.answer-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── INSIDER NOTE ──────────────────────────────────────────── */
+.insider-note {
+  background: var(--amber-pale);
+  border: 1px solid #EFC75E;
+  border-left: 3px solid var(--gold);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--amber);
+  line-height: 1.6;
+  margin-top: 4px;
+}
+.insider-note strong {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 5px;
+  color: var(--gold);
+}
+
+/* ── DIVIDER ───────────────────────────────────────────────── */
+.section-divider {
+  height: 1px;
+  background: var(--paper3);
+  margin: 48px 0;
+}
+
+/* ── RESULTS PANEL ─────────────────────────────────────────── */
+.results-panel {
+  position: sticky;
+  top: 24px;
+}
+
+/* Actually let's do inline results below questions */
+.results-section {
+  margin-top: 8px;
+}
+
+.results-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.results-title {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.score-display {
+  background: var(--ink);
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.score-tally {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.score-box {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 12px 16px;
+  min-width: 80px;
+  text-align: center;
+  transition: all 0.3s var(--ease);
+}
+.score-box.total {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.score-box-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 4px;
+}
+.score-box.total .score-box-label { color: rgba(255,255,255,0.7); }
+.score-box-val {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.3);
+  transition: all 0.3s var(--ease);
+  line-height: 1;
+}
+.score-box-val.has-score { color: var(--white); }
+.score-box.total .score-box-val { color: var(--white); }
+
+.score-status {
+  flex-shrink: 0;
+  text-align: right;
+}
+.score-status-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 4px;
+}
+.score-status-text {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  font-weight: 300;
+}
+.score-status-text.active { color: var(--white); }
+
+/* Result type cards */
+.type-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.type-card {
+  background: var(--white);
+  border: 1.5px solid var(--paper3);
+  border-radius: 14px;
+  padding: 20px 22px;
+  transition: all 0.4s var(--ease);
+  opacity: 0.45;
+  filter: grayscale(0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.type-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--paper3);
+  border-radius: 14px 0 0 14px;
+  transition: background 0.3s;
+}
+
+.type-card.active {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+.type-card.active-A::before { background: var(--green-l); }
+.type-card.active-B::before { background: var(--gold-l); }
+.type-card.active-C::before { background: #C0392B; }
+
+.type-card.active-A { border-color: rgba(45,90,64,0.25); box-shadow: 0 8px 32px rgba(26,58,42,0.08); }
+.type-card.active-B { border-color: rgba(201,150,13,0.25); box-shadow: 0 8px 32px rgba(184,134,11,0.08); }
+.type-card.active-C { border-color: rgba(192,57,43,0.2); box-shadow: 0 8px 32px rgba(139,34,21,0.08); }
+
+.type-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.type-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  padding: 5px 10px;
+  border-radius: 100px;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.badge-A { background: var(--green-pale); color: var(--green); }
+.badge-B { background: var(--amber-pale); color: var(--amber); }
+.badge-C { background: var(--red-pale); color: var(--red); }
+
+.type-name {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.score-range-tag {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: var(--paper);
+  color: var(--ink4);
+  border: 1px solid var(--paper3);
+  flex-shrink: 0;
+}
+
+.type-divider {
+  height: 1px;
+  background: var(--paper3);
+  margin: 14px 0;
+}
+
+.type-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 500px) {
+  .type-grid { grid-template-columns: 1fr; }
+}
+
+.type-detail-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin-bottom: 5px;
+}
+
+.type-detail-val {
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.55;
+}
+
+.type-budget {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* Next step */
+.next-step-box {
+  background: var(--ink);
+  border-radius: 14px;
+  padding: 22px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all 0.5s var(--ease);
+}
+.next-step-box.show { opacity: 1; transform: translateY(0); }
+
+.next-icon {
+  width: 36px; height: 36px;
+  background: var(--gold);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 17px;
+}
+
+.next-step-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--gold-l);
+  margin-bottom: 4px;
+}
+
+.next-step-text {
+  font-size: 14px;
+  color: var(--white);
+  line-height: 1.55;
+}
+.next-step-text strong { color: var(--gold-l); }
+
+/* Incomplete notice */
+.incomplete-notice {
+  background: var(--paper2);
+  border: 1px dashed var(--paper3);
+  border-radius: 12px;
+  padding: 20px 24px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.incomplete-notice.hidden { display: none; }
+.incomplete-icon { font-size: 28px; margin-bottom: 8px; }
+.incomplete-text { font-size: 13px; color: var(--ink3); }
+
+/* ── ANIMATIONS ────────────────────────────────────────────── */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(184,134,11,0.3); }
+  70% { box-shadow: 0 0 0 8px rgba(184,134,11,0); }
+  100% { box-shadow: 0 0 0 0 rgba(184,134,11,0); }
+}
+.answer-card.just-selected { animation: pulse-ring 0.5s ease; }
+
+@keyframes score-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.score-pop { animation: score-pop 0.3s var(--ease); }
+
+/* ── FOOTER ────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--paper3);
+  padding: 24px 40px;
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.footer-brand {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink4);
+}
+.footer-section {
+  font-size: 12px;
+  color: var(--ink4);
+}
+
+/* Reset button */
+.reset-btn {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink4);
+  background: none;
+  border: 1px solid var(--paper3);
+  border-radius: 100px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.reset-btn:hover { border-color: var(--ink4); color: var(--ink); }
+
+  /* TOP TAB BAR */
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid #1f1f1f;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .topbar-inner {
+      display: flex;
+      gap: 10px;
+      padding: 14px 18px;
+      width: max-content;
+      min-width: 100%;
+    }
+
+    /* TAB */
+
+    .tab {
+      text-decoration: none;
+      color: #9ca3af;
+      padding: 12px 18px;
+      border-radius: 999px;
+      transition: all 0.22s ease;
+      position: relative;
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid transparent;
+      flex-shrink: 0;
+    }
+
+    /* HOVER */
+
+    .tab:hover {
+      background: #111111;
+      color: white;
+      border-color: #1f1f1f;
+    }
+
+    /* ACTIVE */
+
+    /* .tab.active {
+      background: white;
+      color: black;
+      font-weight: 600;
+    } */
+
+    /* CLICK EFFECT */
+
+    .tab::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: rgba(255,255,255,0.08);
+      transform: scale(0);
+      transition: transform 0.25s ease;
+    }
+
+    .tab:active::after {
+      transform: scale(1);
+    }
+
+     /* SCROLLBAR */
+
+    .topbar::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .topbar::-webkit-scrollbar-thumb {
+      background: #222;
+      border-radius: 999px;
+    }
+</style>
+</head>
+<body>
+<div style="background:#141416;color:rgba(255,255,255,0.78);font:400 13.5px/1.55 'DM Sans',system-ui,sans-serif;padding:11px 20px;text-align:center">
+  Free sample from <strong style="color:#fff;font-weight:500">Road to MVP, Part 01: Choose Your Stack</strong>. The full playbook adds the MVP Budget Calculator and the Stack Decision Tree.
+  <a href="/products/choose-your-stack" style="margin-left:6px;color:#e8c170;font-weight:500;text-decoration:none;white-space:nowrap">Get the full playbook, $19 &rarr;</a>
+</div>
+
+  <!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">The Road to MVP</div>
+    <h1 class="hero-title">SaaS <em>Type</em><br>Classifier</h1>
+    <p class="hero-sub">Answer 3 questions. Instantly know your stack, your approach, and your MVP budget, before you spend a single dollar.</p>
+    <div class="hero-badges">
+      <span class="badge">Part 01 of 07</span>
+      <span class="badge">Quick Win</span>
+      <span class="badge">Fillable</span>
+      <span class="badge">~10 minutes</span>
+    </div>
+    <div class="progress-strip" id="progressStrip">
+      <div class="progress-item" id="prog-0"><div class="fill"></div></div>
+      <div class="progress-item" id="prog-1"><div class="fill"></div></div>
+      <div class="progress-item" id="prog-2"><div class="fill"></div></div>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- Q1 -->
+  <div class="q-section">
+    <div class="q-label">Question 01 / 03</div>
+    <div class="q-card">
+      <div class="q-num-badge">Q1</div>
+      <h2 class="q-title">What kind of problem does your SaaS solve?</h2>
+      <p class="q-hint">Pick the answer that best describes the core job your product does for users.</p>
+    </div>
+    <div class="answers-grid" id="q1-grid">
+      <div class="answer-card" data-q="1" data-val="A" data-pts="1" onclick="selectAnswer(this)">
+        <div class="answer-header">
+          <div class="answer-letter">A</div>
+          <div class="answer-title">Automates a simple, repetitive task</div>
+          <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <p class="answer-desc">e.g. scheduling, reminders, basic data entry, simple form workflows</p>
+        <div class="answer-footer">
+          <span class="answer-pill pill-A">No-code territory</span>
+          <span class="answer-pts">+1 pt</span>
+        </div>
+      </div>
+      <div class="answer-card" data-q="1" data-val="B" data-pts="2" onclick="selectAnswer(this)">
+        <div class="answer-header">
+          <div class="answer-letter">B</div>
+          <div class="answer-title">Connects two or more existing tools or data sources</div>
+          <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <p class="answer-desc">e.g. syncing CRMs, aggregating reports, managing multiple platforms in one place</p>
+        <div class="answer-footer">
+          <span class="answer-pill pill-B">Hybrid, some dev needed</span>
+          <span class="answer-pts">+2 pts</span>
+        </div>
+      </div>
+      <div class="answer-card" data-q="1" data-val="C" data-pts="3" onclick="selectAnswer(this)">
+        <div class="answer-header">
+          <div class="answer-letter">C</div>
+          <div class="answer-title">Processes, analyses, or transforms complex data</div>
+          <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <p class="answer-desc">e.g. custom algorithms, AI features, real-time data, financial calculations</p>
+        <div class="answer-footer">
+          <span class="answer-pill pill-C">Custom build likely needed</span>
+          <span class="answer-pts">+3 pts</span>
+        </div>
+      </div>
+      <div class="answer-card" data-q="1" data-val="D" data-pts="4" onclick="selectAnswer(this)">
+        <div class="answer-header">
+          <div class="answer-letter">D</div>
+          <div class="answer-title">Enables real-time collaboration or multi-user interactions</div>
+          <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <p class="answer-desc">e.g. shared workspaces, live editing, role-based permissions, team dashboards</p>
+        <div class="answer-footer">
+          <span class="answer-pill pill-D">Full custom build required</span>
+          <span class="answer-pts">+4 pts</span>
+        </div>
+      </div>
+    </div>
+    <div class="insider-note">
+      <strong>Insider Note</strong>
+      If you're torn between B and C, always score higher. Underestimating complexity is the #1 reason SaaS projects run over budget and over time.
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Q2 -->
+  <div class="q-section">
+    <div class="q-label">Question 02 / 03</div>
+    <div class="q-card">
+      <div class="q-num-badge">Q2</div>
+      <h2 class="q-title">Who are your first 100 users and how will you reach them?</h2>
+      <p class="q-hint">Your distribution method affects your tech requirements more than you think.</p>
+    </div>
+    <div class="answers-grid" id="q2-grid">
+      <div class="answer-card" data-q="2" data-val="A" data-pts="1" onclick="selectAnswer(this)">
+        <div class="answer-header">
+          <div class="answer-letter">A</div>
+          <div class="answer-title">I'll sell directly to people I already know</div>
+          <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <p class="answer-desc">Existing network, warm outreach, LinkedIn, local business community</p>
+        <div class="answer-footer">
+          <span class="answer-pill pill-A">Simple auth + payments enough</span>
+          <span class="answer-pts">+1 pt</span>
+        </div>
+      </div>
+      <div class="answer-card" data-q="2" data-val="B" data-pts="2" onclick="selectAnswer(this)">
+        <div class="answer-header">
+          <div class="answer-letter">B</div>
+          <div class="answer-title">I'll build an audience on social and convert them</div>
+          <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <p class="answer-desc">Instagram, TikTok, YouTube, Twitter/X: inbound marketing funnel</p>
+        <div class="answer-footer">
+          <span class="answer-pill pill-B">Landing page + email capture</span>
+          <span class="answer-pts">+2 pts</span>
+        </div>
+      </div>
+      <div class="answer-card" data-q="2" data-val="C" data-pts="3" onclick="selectAnswer(this)">
+        <div class="answer-header">
+          <div class="answer-letter">C</div>
+          <div class="answer-title">I'll use SEO, ads, or a marketplace to drive traffic</div>
+          <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <p class="answer-desc">Google Ads, App Store, ProductHunt, affiliate partnerships</p>
+        <div class="answer-footer">
+          <span class="answer-pill pill-C">Analytics + tracking needed</span>
+          <span class="answer-pts">+3 pts</span>
+        </div>
+      </div>
+      <div class="answer-card" data-q="2" data-val="D" data-pts="4" onclick="selectAnswer(this)">
+        <div class="answer-header">
+          <div class="answer-letter">D</div>
+          <div class="answer-title">I'll sell B2B with demos, contracts, and a sales process</div>
+          <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <p class="answer-desc">Sales team, demo calls, custom contracts, SSO, compliance requirements</p>
+        <div class="answer-footer">
+          <span class="answer-pill pill-D">Custom build, no shortcuts</span>
+          <span class="answer-pts">+4 pts</span>
+        </div>
+      </div>
+    </div>
+    <div class="insider-note">
+      <strong>Insider Note</strong>
+      B2B enterprise sales (option D) almost always requires custom development. Compliance and security requirements alone rule out most no-code tools.
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Q3 -->
+  <div class="q-section">
+    <div class="q-label">Question 03 / 03</div>
+    <div class="q-card">
+      <div class="q-num-badge">Q3</div>
+      <h2 class="q-title">What does your MVP need to do on day one?</h2>
+      <p class="q-hint">Be honest. What is the absolute minimum feature set to charge your first customer?</p>
+    </div>
+    <div class="answers-grid" id="q3-grid">
+      <div class="answer-card" data-q="3" data-val="A" data-pts="1" onclick="selectAnswer(this)">
+        <div class="answer-header">
+          <div class="answer-letter">A</div>
+          <div class="answer-title">Show, collect, or display information in a structured way</div>
+          <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <p class="answer-desc">Dashboards, directories, databases, simple portals, content platforms</p>
+        <div class="answer-footer">
+          <span class="answer-pill pill-A">Airtable + Softr can handle this</span>
+          <span class="answer-pts">+1 pt</span>
+        </div>
+      </div>
+      <div class="answer-card" data-q="3" data-val="B" data-pts="2" onclick="selectAnswer(this)">
+        <div class="answer-header">
+          <div class="answer-letter">B</div>
+          <div class="answer-title">Let users log in, manage their account, and see their own data</div>
+          <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <p class="answer-desc">User profiles, settings, saved items, personalised views</p>
+        <div class="answer-footer">
+          <span class="answer-pill pill-B">Auth library + basic backend</span>
+          <span class="answer-pts">+2 pts</span>
+        </div>
+      </div>
+      <div class="answer-card" data-q="3" data-val="C" data-pts="3" onclick="selectAnswer(this)">
+        <div class="answer-header">
+          <div class="answer-letter">C</div>
+          <div class="answer-title">Integrate with one or more third-party APIs</div>
+          <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <p class="answer-desc">Stripe payments, Twilio SMS, Google Maps, OpenAI, Slack webhooks</p>
+        <div class="answer-footer">
+          <span class="answer-pill pill-C">Dev required for API work</span>
+          <span class="answer-pts">+3 pts</span>
+        </div>
+      </div>
+      <div class="answer-card" data-q="3" data-val="D" data-pts="4" onclick="selectAnswer(this)">
+        <div class="answer-header">
+          <div class="answer-letter">D</div>
+          <div class="answer-title">Run complex logic, calculations, or real-time processing</div>
+          <div class="answer-check"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <p class="answer-desc">Custom pricing engines, matching algorithms, live notifications, AI pipelines</p>
+        <div class="answer-footer">
+          <span class="answer-pill pill-D">Fully custom, significant dev time</span>
+          <span class="answer-pts">+4 pts</span>
+        </div>
+      </div>
+    </div>
+    <div class="insider-note">
+      <strong>Insider Note</strong>
+      API integrations (option C) are where no-code tools break down most often. If your core value prop requires an external API, budget for a developer from day one.
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- RESULTS -->
+  <div class="results-section" id="resultsSection">
+    <div class="results-header">
+      <div>
+        <div class="q-label">Your Results</div>
+        <h2 class="results-title">What's Your SaaS Type?</h2>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">↺ Start over</button>
+    </div>
+
+    <!-- Score display -->
+    <div class="score-display">
+      <div class="score-tally">
+        <div class="score-box">
+          <div class="score-box-label">Q1 Score</div>
+          <div class="score-box-val" id="score-q1">–</div>
+        </div>
+        <div class="score-box">
+          <div class="score-box-label">Q2 Score</div>
+          <div class="score-box-val" id="score-q2">–</div>
+        </div>
+        <div class="score-box">
+          <div class="score-box-label">Q3 Score</div>
+          <div class="score-box-val" id="score-q3">–</div>
+        </div>
+        <div class="score-box total">
+          <div class="score-box-label">Total</div>
+          <div class="score-box-val" id="score-total">0</div>
+        </div>
+      </div>
+      <div class="score-status">
+        <div class="score-status-label">Status</div>
+        <div class="score-status-text" id="statusText">Answer all 3 questions</div>
+      </div>
+    </div>
+
+    <!-- Type cards -->
+    <div class="type-cards">
+
+      <!-- Type A -->
+      <div class="type-card" id="type-A">
+        <div class="type-card-header">
+          <span class="type-badge badge-A">TYPE A</span>
+          <div class="type-name">No-Code Builder</div>
+          <span class="score-range-tag">3 – 5 pts</span>
+        </div>
+        <div class="type-divider"></div>
+        <div class="type-grid">
+          <div>
+            <div class="type-detail-label">Recommended Stack</div>
+            <div class="type-detail-val">Bubble.io or Glide + Airtable + Stripe + Zapier</div>
+          </div>
+          <div>
+            <div class="type-detail-label">MVP Timeline</div>
+            <div class="type-detail-val">2 – 6 weeks</div>
+          </div>
+          <div>
+            <div class="type-detail-label">Budget Range</div>
+            <div class="type-budget">$0 – $200 / mo</div>
+          </div>
+          <div>
+            <div class="type-detail-label">Developer Needed?</div>
+            <div class="type-detail-val">No, you can build this yourself</div>
+          </div>
+        </div>
+        <div class="type-divider"></div>
+        <div class="type-detail-label">Your Next Step in the Kit</div>
+        <div class="type-detail-val">Jump to <strong>Part 02</strong> (Build Without Burning Cash). You likely don't need a developer at all.</div>
+      </div>
+
+      <!-- Type B -->
+      <div class="type-card" id="type-B">
+        <div class="type-card-header">
+          <span class="type-badge badge-B">TYPE B</span>
+          <div class="type-name">Hybrid Builder</div>
+          <span class="score-range-tag">6 – 8 pts</span>
+        </div>
+        <div class="type-divider"></div>
+        <div class="type-grid">
+          <div>
+            <div class="type-detail-label">Recommended Stack</div>
+            <div class="type-detail-val">Next.js + Supabase + a part-time dev + no-code for non-core features</div>
+          </div>
+          <div>
+            <div class="type-detail-label">MVP Timeline</div>
+            <div class="type-detail-val">6 – 12 weeks</div>
+          </div>
+          <div>
+            <div class="type-detail-label">Budget Range</div>
+            <div class="type-budget">$500 – $3,000 one-time</div>
+          </div>
+          <div>
+            <div class="type-detail-label">Developer Needed?</div>
+            <div class="type-detail-val">Part-time freelancer: 10–20 hrs/week</div>
+          </div>
+        </div>
+        <div class="type-divider"></div>
+        <div class="type-detail-label">Your Next Step in the Kit</div>
+        <div class="type-detail-val">Read <strong>Part 02</strong> then go straight to <strong>Part 03</strong> (Hire Right the First Time).</div>
+      </div>
+
+      <!-- Type C -->
+      <div class="type-card" id="type-C">
+        <div class="type-card-header">
+          <span class="type-badge badge-C">TYPE C</span>
+          <div class="type-name">Custom Build</div>
+          <span class="score-range-tag">9 – 12 pts</span>
+        </div>
+        <div class="type-divider"></div>
+        <div class="type-grid">
+          <div>
+            <div class="type-detail-label">Recommended Stack</div>
+            <div class="type-detail-val">React/Next.js + Node.js or Python API + PostgreSQL + dedicated dev team</div>
+          </div>
+          <div>
+            <div class="type-detail-label">MVP Timeline</div>
+            <div class="type-detail-val">12 – 24 weeks</div>
+          </div>
+          <div>
+            <div class="type-detail-label">Budget Range</div>
+            <div class="type-budget">$5,000 – $25,000 one-time</div>
+          </div>
+          <div>
+            <div class="type-detail-label">Developer Needed?</div>
+            <div class="type-detail-val">Yes, full-time or small team required</div>
+          </div>
+        </div>
+        <div class="type-divider"></div>
+        <div class="type-detail-label">Your Next Step in the Kit</div>
+        <div class="type-detail-val">Go directly to <strong>Part 03</strong> (Hire Right the First Time). This is your most critical decision.</div>
+      </div>
+    </div>
+
+    <!-- Incomplete notice -->
+    <div class="incomplete-notice" id="incompleteNotice">
+      <div class="incomplete-icon">☝️</div>
+      <div class="incomplete-text">Answer all 3 questions above to unlock your personalised result.</div>
+    </div>
+
+    <!-- Next step -->
+    <div class="next-step-box" id="nextStepBox">
+      <div class="next-icon">→</div>
+      <div>
+        <div class="next-step-label">What to do right now</div>
+        <div class="next-step-text" id="nextStepText"></div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <span class="footer-brand">ROAD TO MVP</span>
+  <span class="footer-section">Part 01 of 07: SaaS Type Classifier</span>
+</footer>
+
+<script>
+/* Road to MVP helpers: copy with a fallback, and progress saved in this browser. */
+function copyText(text) {
+  const fallback = () => new Promise((resolve, reject) => {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+    let ok = false; try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    ta.remove(); ok ? resolve() : reject(new Error('Copy failed'));
+  });
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).catch(fallback);
+  return fallback();
+}
+const KIT_KEY = 'road-to-mvp:01-classifier';
+function kitLoad() { try { return JSON.parse(localStorage.getItem(KIT_KEY) || '{}') || {}; } catch (e) { return {}; } }
+function kitSave(patch) { try { localStorage.setItem(KIT_KEY, JSON.stringify(Object.assign(kitLoad(), patch))); } catch (e) { /* storage unavailable: progress is simply not kept */ } }
+</script>
+<script>
+const scores = { 1: null, 2: null, 3: null };
+
+const nextSteps = {
+  A: 'You\'re a <strong>Type A: No-Code Builder.</strong> Head straight to Part 02 to pick your tool stack. You can build your MVP without writing a single line of code or hiring anyone.',
+  B: 'You\'re a <strong>Type B: Hybrid Builder.</strong> Skim Part 02 for your core tools, then read Part 03 carefully, finding the right part-time freelancer is your most important next move.',
+  C: 'You\'re a <strong>Type C: Custom Build.</strong> Skip ahead to Part 03 right now. Hiring the right developer is the single most important thing you\'ll do, and getting it wrong is expensive.'
+};
+
+function selectAnswer(el) {
+  const q = parseInt(el.dataset.q);
+  const val = el.dataset.val;
+  const pts = parseInt(el.dataset.pts);
+
+  // Deselect siblings
+  const grid = document.getElementById(`q${q}-grid`);
+  grid.querySelectorAll('.answer-card').forEach(c => {
+    c.classList.remove('selected', 'selected-A', 'selected-B', 'selected-C', 'selected-D', 'just-selected');
+  });
+
+  // Select this card
+  el.classList.add('selected', `selected-${val}`, 'just-selected');
+  setTimeout(() => el.classList.remove('just-selected'), 600);
+
+  scores[q] = pts;
+  const answers = {};
+  document.querySelectorAll('.answer-card.selected').forEach(c => { answers[c.dataset.q] = c.dataset.val; });
+  kitSave({ answers });
+
+  updateProgress();
+  updateScores();
+  updateResults();
+}
+
+function updateProgress() {
+  for (let i = 1; i <= 3; i++) {
+    const item = document.getElementById(`prog-${i-1}`);
+    if (scores[i] !== null) {
+      item.classList.add('answered');
+    } else {
+      item.classList.remove('answered');
+    }
+  }
+}
+
+function updateScores() {
+  for (let i = 1; i <= 3; i++) {
+    const el = document.getElementById(`score-q${i}`);
+    if (scores[i] !== null) {
+      el.textContent = scores[i];
+      el.classList.add('has-score');
+      el.classList.add('score-pop');
+      setTimeout(() => el.classList.remove('score-pop'), 350);
+    } else {
+      el.textContent = '–';
+      el.classList.remove('has-score');
+    }
+  }
+  const total = (scores[1] || 0) + (scores[2] || 0) + (scores[3] || 0);
+  const totalEl = document.getElementById('score-total');
+  totalEl.textContent = total;
+  totalEl.classList.add('score-pop');
+  setTimeout(() => totalEl.classList.remove('score-pop'), 350);
+}
+
+function getType(total) {
+  if (total <= 5) return 'A';
+  if (total <= 8) return 'B';
+  return 'C';
+}
+
+function updateResults() {
+  const allAnswered = scores[1] !== null && scores[2] !== null && scores[3] !== null;
+  const total = (scores[1] || 0) + (scores[2] || 0) + (scores[3] || 0);
+  const statusEl = document.getElementById('statusText');
+  const nextBox = document.getElementById('nextStepBox');
+  const incomplete = document.getElementById('incompleteNotice');
+
+  // Deactivate all type cards first
+  ['A', 'B', 'C'].forEach(t => {
+    const card = document.getElementById(`type-${t}`);
+    card.classList.remove('active', 'active-A', 'active-B', 'active-C');
+  });
+
+  if (!allAnswered) {
+    const answered = Object.values(scores).filter(v => v !== null).length;
+    statusEl.textContent = `${answered} of 3 answered`;
+    statusEl.classList.remove('active');
+    nextBox.classList.remove('show');
+    incomplete.classList.remove('hidden');
+    return;
+  }
+
+  const type = getType(total);
+  const card = document.getElementById(`type-${type}`);
+  card.classList.add('active', `active-${type}`);
+
+  incomplete.classList.add('hidden');
+
+  const typeNames = { A: 'Type A: No-Code Builder', B: 'Type B: Hybrid Builder', C: 'Type C: Custom Build' };
+  statusEl.textContent = `${typeNames[type]} · ${total} pts`;
+  statusEl.classList.add('active');
+
+  document.getElementById('nextStepText').innerHTML = nextSteps[type];
+  nextBox.classList.add('show');
+
+  // Scroll to results smoothly (not while restoring saved answers on load)
+  if (!window.kitRestoring) setTimeout(() => {
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 200);
+}
+
+function resetAll() {
+  scores[1] = null; scores[2] = null; scores[3] = null;
+
+  document.querySelectorAll('.answer-card').forEach(c => {
+    c.classList.remove('selected', 'selected-A', 'selected-B', 'selected-C', 'selected-D', 'just-selected');
+  });
+
+  for (let i = 1; i <= 3; i++) {
+    const el = document.getElementById(`score-q${i}`);
+    el.textContent = '–';
+    el.classList.remove('has-score');
+  }
+  document.getElementById('score-total').textContent = '0';
+  document.getElementById('statusText').textContent = 'Answer all 3 questions';
+  document.getElementById('statusText').classList.remove('active');
+  document.getElementById('nextStepBox').classList.remove('show');
+  document.getElementById('incompleteNotice').classList.remove('hidden');
+
+  ['A', 'B', 'C'].forEach(t => {
+    document.getElementById(`type-${t}`).classList.remove('active', 'active-A', 'active-B', 'active-C');
+  });
+
+  kitSave({ answers: {} });
+  updateProgress();
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Saved answers from a previous visit
+(() => {
+  const answers = kitLoad().answers || {};
+  window.kitRestoring = true;
+  Object.entries(answers).forEach(([q, val]) => {
+    const el = document.querySelector(`.answer-card[data-q="${q}"][data-val="${val}"]`);
+    if (el) selectAnswer(el);
+  });
+  window.kitRestoring = false;
+})();
+</script>
+</body>
+</html>

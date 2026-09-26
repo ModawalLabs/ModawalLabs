@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# paid product files and built downloads (the repo is public)
+/private/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
