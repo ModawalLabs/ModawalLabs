@@ -1,0 +1,174 @@
+<!--
+  Source for the Road to MVP cover images in public/products/covers/.
+  Each .cover element (600x800 CSS px) is captured at 2x device pixel ratio as WebP (1200x1600),
+  using the element id as the file name. Titles, stats and colours mirror each playbook's own header.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Road to MVP covers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Lora:ital,wght@0,600;1,600&family=Fira+Code:wght@400;500&family=Crimson+Pro:ital,wght@0,600;1,600&family=Bricolage+Grotesque:wght@400;500&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Outfit:wght@400;500&family=Inconsolata:wght@400;500&family=Familjen+Grotesk:wght@400;500&family=Roboto+Mono:wght@400;500&display=block" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,500&family=Inter:wght@400;500&display=block" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #777; display: flex; flex-wrap: wrap; gap: 40px; padding: 40px; }
+
+  .cover {
+    position: relative; width: 600px; height: 800px; overflow: hidden;
+    background: var(--bg); color: var(--ink);
+    padding: 64px 56px 52px 72px;
+    display: flex; flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* soft accent light + book-spine highlight */
+  .cover::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(90% 60% at 100% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+      radial-gradient(70% 50% at 0% 100%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 70%);
+  }
+  .cover::after {
+    content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 22px; pointer-events: none;
+    background: linear-gradient(90deg, rgba(0,0,0,.45), rgba(255,255,255,.07) 55%, rgba(255,255,255,0) 100%);
+    box-shadow: inset -1px 0 0 rgba(255,255,255,.06);
+  }
+  .num {
+    position: absolute; right: -28px; bottom: -118px;
+    font-family: var(--display); font-weight: var(--dw); font-style: italic;
+    font-size: 440px; line-height: 1; letter-spacing: -0.04em;
+    color: var(--accent); opacity: .07;
+  }
+  .top { position: relative; display: flex; align-items: center; gap: 14px;
+    font-family: var(--mono); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; }
+  .top .series { color: var(--accent); }
+  .top .rule { flex: 1; height: 1px; background: color-mix(in srgb, var(--ink) 18%, transparent); }
+  .top .part { color: color-mix(in srgb, var(--ink) 55%, transparent); }
+
+  h1 { position: relative; margin-top: 112px;
+    font-family: var(--display); font-weight: var(--dw); font-size: var(--size, 76px);
+    line-height: 1.02; letter-spacing: var(--track, -0.02em); color: var(--ink); }
+  h1 em { font-style: italic; color: var(--accent); }
+  .grad h1 em { background: linear-gradient(135deg, #8B5CF6, #EC4899); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .06em; }
+
+  .sub { position: relative; margin-top: 28px; max-width: 430px;
+    font-family: var(--sans); font-size: 19px; line-height: 1.55;
+    color: color-mix(in srgb, var(--ink) 62%, transparent); }
+
+  .stats { position: relative; margin-top: auto; display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent); padding-top: 26px; gap: 16px; }
+  .stats b { display: block; font-family: var(--display); font-weight: var(--dw); font-size: 44px; line-height: 1; color: var(--ink);
+    font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
+  .num { font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
+
+  /* complete-series cover */
+  .bundle { --bg:#111110; --ink:#F4F2EC; --accent:#C8A96B; --display:"Newsreader"; --dw:500; --sans:"Inter"; --mono:"DM Mono"; }
+  .bundle::before { background:
+      radial-gradient(80% 55% at 100% 0%, rgba(200,169,107,.16), transparent 70%),
+      radial-gradient(60% 45% at 0% 100%, rgba(120,140,255,.08), transparent 70%); }
+  .bundle h1 { margin-top: 84px; font-size: 84px; letter-spacing: -0.025em; }
+  .parts { position: relative; margin-top: 40px; list-style: none; display: grid; gap: 13px; }
+  .parts li { display: flex; align-items: center; gap: 16px; font-family: var(--sans); font-size: 18px;
+    color: color-mix(in srgb, var(--ink) 82%, transparent); }
+  .parts li i { width: 10px; height: 10px; border-radius: 99px; background: var(--dot); flex: none; box-shadow: 0 0 14px var(--dot); }
+  .parts li small { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; color: color-mix(in srgb, var(--ink) 45%, transparent); width: 26px; }
+  .stats span { display: block; margin-top: 10px; font-family: var(--mono); font-size: 11.5px; line-height: 1.35;
+    letter-spacing: .12em; text-transform: uppercase; color: color-mix(in srgb, var(--ink) 55%, transparent); }
+  .foot { position: relative; margin-top: 30px; display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+    color: color-mix(in srgb, var(--ink) 42%, transparent); }
+
+  .c1 { --bg:#0D0D0D; --ink:#FFFFFF; --accent:#C9960D; --display:"Playfair Display"; --dw:700; --sans:"DM Sans"; --mono:"DM Mono"; }
+  .c2 { --bg:#161616; --ink:#F0EDE8; --accent:#E8B84B; --display:"Instrument Serif"; --dw:400; --sans:"Syne"; --mono:"JetBrains Mono"; --size:84px; --track:-0.01em; }
+  .c3 { --bg:#1A1814; --ink:#FFFFFF; --accent:#E8955A; --display:"Fraunces"; --dw:600; --sans:"Plus Jakarta Sans"; --mono:"IBM Plex Mono"; }
+  .c4 { --bg:#111113; --ink:#ECECEC; --accent:#A855F7; --display:"Lora"; --dw:600; --sans:"Cabinet Grotesk"; --mono:"Fira Code"; }
+  .c5 { --bg:#1C1917; --ink:#FFFFFF; --accent:#86EFAC; --display:"Crimson Pro"; --dw:600; --sans:"Bricolage Grotesque"; --mono:"Space Mono"; --size:80px; }
+  .c6 { --bg:#1B1916; --ink:#FFFFFF; --accent:#FCA5A5; --display:"Cormorant Garamond"; --dw:500; --sans:"Outfit"; --mono:"Inconsolata"; --size:88px; --track:-0.01em; }
+  .c7 { --bg:#0D0D12; --ink:#F0EEF8; --accent:#A3E635; --display:"Playfair Display"; --dw:700; --sans:"Familjen Grotesk"; --mono:"Roboto Mono"; }
+</style>
+</head>
+<body>
+
+<div class="cover c1" id="choose-your-stack">
+  <div class="num">01</div>
+  <div class="top"><span class="series">Road to MVP</span><span class="rule"></span><span class="part">Part 01 / 07</span></div>
+  <h1>Choose<br>Your <em>Stack</em></h1>
+  <p class="sub">Answer 3 questions. Know your stack, your approach and your MVP budget before you spend a single dollar.</p>
+  <div class="stats"><div><b>3</b><span>Questions</span></div><div><b>~10</b><span>Minutes</span></div><div><b>3</b><span>Tools</span></div></div>
+  <div class="foot"><span>ModawalLabs</span><span>No-code vs. code</span></div>
+</div>
+
+<div class="cover c2" id="build-without-burning-cash">
+  <div class="num">02</div>
+  <div class="top"><span class="series">Road to MVP</span><span class="rule"></span><span class="part">Part 02 / 07</span></div>
+  <h1>Build Without<br><em>Burning Cash</em></h1>
+  <p class="sub">The 20 tools a senior developer would actually recommend, with honest pricing and real trade-offs.</p>
+  <div class="stats"><div><b>20</b><span>Tools</span></div><div><b>$0</b><span>To start</span></div><div><b>5</b><span>Categories</span></div></div>
+  <div class="foot"><span>ModawalLabs</span><span>Tool stack</span></div>
+</div>
+
+<div class="cover c3" id="hire-right-the-first-time">
+  <div class="num">03</div>
+  <div class="top"><span class="series">Road to MVP</span><span class="rule"></span><span class="part">Part 03 / 07</span></div>
+  <h1>Hire Right<br>the <em>First Time</em></h1>
+  <p class="sub">Find, vet, and onboard a developer without knowing how to code.</p>
+  <div class="stats"><div><b>10</b><span>Interview questions</span></div><div><b>19</b><span>Red flags</span></div><div><b>4</b><span>Tools</span></div></div>
+  <div class="foot"><span>ModawalLabs</span><span>Hiring</span></div>
+</div>
+
+<div class="cover c4 grad" id="ai-as-your-co-founder">
+  <div class="num">04</div>
+  <div class="top"><span class="series">Road to MVP</span><span class="rule"></span><span class="part">Part 04 / 07</span></div>
+  <h1>AI as Your<br><em>Co-Founder</em></h1>
+  <p class="sub">50 engineered prompts for the exact decisions non-tech founders face building a SaaS.</p>
+  <div class="stats"><div><b>50</b><span>Prompts</span></div><div><b>7</b><span>Categories</span></div><div><b>3</b><span>AI models</span></div></div>
+  <div class="foot"><span>ModawalLabs</span><span>Prompt library</span></div>
+</div>
+
+<div class="cover c5" id="get-paid-before-you-launch">
+  <div class="num">05</div>
+  <div class="top"><span class="series">Road to MVP</span><span class="rule"></span><span class="part">Part 05 / 07</span></div>
+  <h1>Get Paid<br><em>Before You<br>Launch</em></h1>
+  <p class="sub">From “what should I charge?” to your first payment processed, before your product is finished.</p>
+  <div class="stats"><div><b>5</b><span>Pricing models</span></div><div><b>30</b><span>Stripe tasks</span></div><div><b>3</b><span>Email templates</span></div></div>
+  <div class="foot"><span>ModawalLabs</span><span>Pricing &amp; payments</span></div>
+</div>
+
+<div class="cover c6" id="legal-and-legal-ish">
+  <div class="num">06</div>
+  <div class="top"><span class="series">Road to MVP</span><span class="rule"></span><span class="part">Part 06 / 07</span></div>
+  <h1>Legal &amp;<br><em>Legal-ish</em></h1>
+  <p class="sub">The 4 documents every SaaS needs before its first paying customer.</p>
+  <div class="stats"><div><b>4</b><span>Legal docs</span></div><div><b>7</b><span>IP clauses</span></div><div><b>38</b><span>Review items</span></div></div>
+  <div class="foot"><span>ModawalLabs</span><span>Not legal advice</span></div>
+</div>
+
+<div class="cover c7" id="launch-week-playbook">
+  <div class="num">07</div>
+  <div class="top"><span class="series">Road to MVP</span><span class="rule"></span><span class="part">Part 07 / 07</span></div>
+  <h1>Launch Week<br><em>Playbook</em></h1>
+  <p class="sub">30 tasks in the right order, plus a framework for when nothing sells.</p>
+  <div class="stats"><div><b>30</b><span>Launch tasks</span></div><div><b>7</b><span>Post templates</span></div><div><b>7</b><span>Days tracked</span></div></div>
+  <div class="foot"><span>ModawalLabs</span><span>Launch</span></div>
+</div>
+
+<div class="cover bundle" id="road-to-mvp-bundle">
+  <div class="top"><span class="series">Road to MVP</span><span class="rule"></span><span class="part">Complete series</span></div>
+  <h1>The Road<br>to <em>MVP</em></h1>
+  <ul class="parts">
+    <li style="--dot:#C9960D"><i></i><small>01</small>Choose Your Stack</li>
+    <li style="--dot:#E8B84B"><i></i><small>02</small>Build Without Burning Cash</li>
+    <li style="--dot:#E8955A"><i></i><small>03</small>Hire Right the First Time</li>
+    <li style="--dot:#A855F7"><i></i><small>04</small>AI as Your Co-Founder</li>
+    <li style="--dot:#86EFAC"><i></i><small>05</small>Get Paid Before You Launch</li>
+    <li style="--dot:#FCA5A5"><i></i><small>06</small>Legal &amp; Legal-ish</li>
+    <li style="--dot:#A3E635"><i></i><small>07</small>Launch Week Playbook</li>
+  </ul>
+  <div class="foot" style="margin-top:auto"><span>ModawalLabs</span><span>7 playbooks</span></div>
+</div>
+
+</body>
+</html>

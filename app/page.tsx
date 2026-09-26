@@ -1,33 +1,25 @@
-import Navbar from "@/components/Navbar";
-// import Hero from "@/components/Hero";
-import CredibilityStrip from "@/components/CredibilityStrip";
-import WhatIDo from "@/components/WhatIDo";
-import Products from "@/components/Products";
-import BuildPhilosophy from "@/components/BuildPhilosophy";
-import Designs from "@/components/Designs";
-import Testimonials from "@/components/Testimonials";
-import Services from "@/components/Services";
-import PSNote from "@/components/PSNote";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import Playground from "@/components/Playground";
+import Hero from "@/components/home/Hero";
+import Ticker from "@/components/home/Ticker";
+import ProductsSection from "@/components/home/ProductsSection";
+import Principles from "@/components/home/Principles";
+import WorkSection from "@/components/home/WorkSection";
+import AboutSection from "@/components/home/AboutSection";
+import FAQSection from "@/components/home/FAQSection";
+import PSNote from "@/components/home/PSNote";
+import ContactSection from "@/components/home/ContactSection";
 
 export default function Home() {
   return (
-    <main className="bg-[#0B0F1A] min-h-screen">
-      <Navbar />
-      <Playground />
-      {/* <Hero /> */}
-      <CredibilityStrip />
-      <Products />
-       <WhatIDo />
-      <BuildPhilosophy />
-      <Designs />
-      <Testimonials />
-      <Services />
-      <Contact />
+    <>
+      <Hero />
+      <Ticker />
+      <ProductsSection />
+      <Principles />
+      <WorkSection />
+      <AboutSection />
+      <FAQSection />
       <PSNote />
-      <Footer />
-    </main>
+      <ContactSection />
+    </>
   );
 }
